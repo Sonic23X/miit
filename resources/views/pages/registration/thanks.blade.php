@@ -10,7 +10,7 @@
         </div>
         <div class="flex justify-center mt-3">
             <span class="text-base text-center">
-                Pronto se comunicarán contigo, por lo mientras guarda este código QR y muestralo al llegar al evento
+                Hola {{ $person->name }}, pronto se comunicarán contigo, por lo mientras guarda este código QR y muestralo al llegar al evento
             </span>
         </div>
         <p class="flex justify-center mt-10">
