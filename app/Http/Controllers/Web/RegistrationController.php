@@ -73,7 +73,11 @@ class RegistrationController extends Controller
         $person->assistance = 1;
         $person->save();
 
-        return view('pages.registration.validate');
+        $data = [
+            'person' => $person
+        ];
+
+        return view('pages.registration.validate', $data);
     }
 
 }

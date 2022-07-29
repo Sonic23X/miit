@@ -10,7 +10,7 @@
         </div>
         <div class="flex justify-center mt-3">
             <span class="text-base">
-                ¡Disfruta del evento!
+                ¡Disfruta del evento, {{ $person->name }} {{ $person->first_surname }}!
             </span>
         </div>
     </div>
