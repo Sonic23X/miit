@@ -29,10 +29,10 @@ class RegistrationController extends Controller
             'spouse_credit' => $request->tipo_de_credito_conyuge
         ]);
 
-        QrCode::format('svg')
+        QrCode::format('png')
             ->color(0, 0, 0)
-            //->generate(url('validacion/' . $row->hash), '../public/qrcodes/'.$row->id.'.svg');
-            ->generate(url('validacion/' . $row->hash), public_path('qrcodes/' . $row->id . '.svg'));
+            //->generate(url('validacion/' . $row->hash), '../public/qrcodes/'.$row->id.'.png');
+            ->generate(url('validacion/' . $row->hash), public_path('qrcodes/' . $row->id . '.png'));
 
         Mail::to($row->email)->send(new RegisterCompleted($row));
 

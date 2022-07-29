@@ -14,7 +14,7 @@
             </span>
         </div>
         <p class="flex justify-center mt-10">
-            <img src="{{ asset('qrcodes/' . $person->id . '.svg') }}" alt="qr"
+            <img src="{{ asset('qrcodes/' . $person->id . '.png') }}" alt="qr"
                 class="h-40">
         </p>
     </div>
