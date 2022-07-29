@@ -15,18 +15,18 @@ use Illuminate\Mail\Markdown;
 |
 */
 
-Route::domain('registro.' . env('APP_URL'))->group(function () {
+Route::domain('form.' . env('APP_URL'))->group(function () {
     Route::get('/', [RegistrationController::class, 'create']);
     Route::get('/gracias/{hash}', [RegistrationController::class, 'thanks'])->name('thanks');
     Route::post('/formulario', [RegistrationController::class, 'store'])->name('form_store');
     Route::get('/validacion/{hash}', [RegistrationController::class, 'confirm']);
 });
 
-
+/*
 Route::get('/formulario', [RegistrationController::class, 'create']);
 Route::get('/gracias/{hash}', [RegistrationController::class, 'thanks'])->name('thanks');
 Route::post('/formulario', [RegistrationController::class, 'store']);
-Route::get('/validacion/{hash}', [RegistrationController::class, 'confirm']);
+Route::get('/validacion/{hash}', [RegistrationController::class, 'confirm']);*/
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/dashboard', [RegistrationController::class, 'index'])->name('dashboard');
