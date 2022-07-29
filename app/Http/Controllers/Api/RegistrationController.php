@@ -31,7 +31,8 @@ class RegistrationController extends Controller
 
         QrCode::format('svg')
             ->color(0, 0, 0)
-            ->generate(url('validacion/' . $row->hash), '../public/qrcodes/' . $row->id . '.svg');
+            //->generate(url('validacion/' . $row->hash), '../public/qrcodes/'.$row->id.'.svg');
+            ->generate(url('validacion/' . $row->hash), public_path('qrcodes/' . $row->id . '.svg'));
 
         Mail::to($row->email)->send(new RegisterCompleted($row));
 
