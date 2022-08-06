@@ -34,7 +34,11 @@
                                     {{ $row->email }}
                                 </td>
                                 <td class="py-4 px-6">
+                                    @if ($row->credit === 'Selecciona una opción')
+                                    <span>Sin especificar</span>
+                                    @else
                                     {{ $row->credit }}
+                                    @endif
                                 </td>
                                 <td class="py-4 px-6">
                                     @if ($row->spouse_credit != null)
