@@ -16,7 +16,7 @@ class RegistrationController extends Controller
 {
     public function index(): View
     {
-        return view('dashboard');
+        return view('dashboard', ['registration' => Registration::query()->paginate(10)]);
     }
 
     public function create(): View
