@@ -19,15 +19,22 @@ use App\Http\Controllers\Web\{
 |
 */
 
-/*
+
 Route::domain('form.' . env('APP_URL'))->group(function () {
     Route::get('/', [RegistrationController::class, 'create']);
     Route::get('/gracias/{hash}', [RegistrationController::class, 'thanks'])->name('thanks');
     Route::post('/formulario', [RegistrationController::class, 'store'])->name('form_store');
     Route::get('/validacion/{hash}', [RegistrationController::class, 'confirm']);
-});*/
+});
 
+Route::domain('forocanadevihidalgo.' . env('APP_URL'))->group(function () {
+    Route::get('/', [CanadeviController::class, 'create']);
+    Route::get('/gracias/{hash}', [CanadeviController::class, 'thanks'])->name('thanks_canadevi');
+    Route::post('/formulario', [CanadeviController::class, 'store'])->name('form_store_canadevi');
+    Route::get('/validacion/{hash}', [CanadeviController::class, 'confirm']);
+});
 
+/*
 Route::get('/formulario', [RegistrationController::class, 'create']);
 Route::get('/gracias/{hash}', [RegistrationController::class, 'thanks'])->name('thanks');
 Route::post('/formulario', [RegistrationController::class, 'store'])->name('form_store');
@@ -37,7 +44,7 @@ Route::get('/canadevi/formulario', [CanadeviController::class, 'create']);
 Route::get('/canadevi/gracias/{hash}', [CanadeviController::class, 'thanks'])->name('thanks_canadevi');
 Route::post('/canadevi/formulario', [CanadeviController::class, 'store'])->name('form_store_canadevi');
 Route::get('/canadevi/validacion/{hash}', [CanadeviController::class, 'confirm']);
-
+*/
 Route::middleware(['auth'])->group(function() {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 });
