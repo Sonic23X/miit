@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Registration;
@@ -19,7 +18,7 @@ class RegisterCompleted extends Mailable
      *
      * @return void
      */
-    public function __construct(Registration $row)
+    public function __construct(string $row)
     {
         $this->registration = $row;
     }

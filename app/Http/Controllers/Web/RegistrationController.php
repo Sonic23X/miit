@@ -49,10 +49,10 @@ class RegistrationController extends Controller
 
         QrCode::format('png')
                 ->color(0, 0, 0)
-                //->generate(url('validacion/' . $row->hash), '../public/qrcodes/'.$row->id.'.png');
-                ->generate(url('validacion/' . $row->hash), public_path('qrcodes/' . $row->id . '.png'));
+                ->generate(url('validacion/' . $row->hash), '../public/qrcodes/foro_'.$row->id.'.png');
+                //->generate(url('validacion/' . $row->hash), public_path('qrcodes/foro_' . $row->id . '.png'));
 
-        Mail::to($row->email)->send(new RegisterCompleted($row));
+        Mail::to($row->email)->send(new RegisterCompleted('foro_' . $row->id));
 
         return redirect()->route('thanks', $row->hash);
     }
