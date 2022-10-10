@@ -1,11 +1,15 @@
 <x-form-layout>
     <div class="flex flex-col mb-1 items-center">
-        <img class="w-40 h-40" src="{{ asset('images/foto_canadevi.png') }}" alt="logo">
+        <img class="h-24 mb-6" src="{{ asset('images/foto_canadevi.png') }}" alt="logo">
     </div>
     <div class="flex flex-col">
         <div class="flex justify-center">
             <span class="font-bold text-2xl">
-                ¡Gracias por registrarte!
+                @if ($person->mode == App\Models\Canadevi::VIRTUAL)
+                ¡Gracias por haberte registrado al evento virtual del Foro Canadevi Hidalgo 2022!
+                @else
+                ¡Gracias por haberte registrado al evento del Foro Canadevi Hidalgo 2022!
+                @endif
             </span>
         </div>
         <div class="flex justify-center mt-3">
@@ -14,10 +18,6 @@
                 de la misma forma te llegará tu correo tu código QR.
             </span>
         </div>
-        <p class="flex justify-center mt-10">
-            <img src="{{ asset('qrcodes/canadevi_' . $person->id . '.png') }}" alt="qr"
-                class="h-40">
-        </p>
         @if ($person->mode == App\Models\Canadevi::VIRTUAL)
         <div class="flex flex-col justify-center mt-4">
             <p class="text-center">

@@ -28,6 +28,8 @@ class Canadevi extends Model
         'company',
         'position',
         'mode',
+        'payment_mode',
+        'payment_status',
         'assistance'
     ];
 

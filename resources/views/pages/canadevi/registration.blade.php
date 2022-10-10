@@ -1,9 +1,14 @@
 <x-form-layout>
     <div class="flex flex-col mb-10 items-center">
-        <img class="w-40 h-40" src="{{ asset('images/foto_canadevi.png') }}" alt="logo">
+        <img class="h-24 mb-6" src="{{ asset('images/foto_canadevi.png') }}" alt="logo">
         <p class="text-center">
             <span>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio aspernatur vitae dolores, nisi reiciendis nihil debitis tenetur at illo id earum beatae fuga culpa blanditiis minima obcaecati eius reprehenderit cupiditate.
+                ¡Bienvenido al registro de asistencia para el Foro Canadevi Hidalgo 2022!  Por favor llena todos los campos y en la parte inferior del registro escoge si vas a atender al foro de forma virtual o de forma presencial.  El foro presencial tiene un cupo limitado.
+            </span>
+        </p>
+        <p class="text-center">
+            <span>
+                Al haber terminado tu registro, recibirás un correo con más información para la asistencia al foro.
             </span>
         </p>
     </div>
@@ -102,6 +107,9 @@
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                 <label for="mode-2" class="py-4 ml-2 w-full text-sm font-medium text-gray-900">
                     Virtual
+                    <p class="text-xs font-normal text-gray-500">
+                        Acceso libre y gratuito
+                    </p>
                 </label>
             </div>
             <div class="flex items-center pl-4 w-full">
@@ -110,7 +118,7 @@
                     @if (old('mode') != null && old('mode') == 1) checked @endif
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                 <label for="mode-1" class="py-4 ml-2 w-full text-sm font-medium text-gray-900">
-                    Presencial
+                    Presencial - $700.00
                     <p class="text-xs font-normal text-gray-500">
                     @if ($counts >= $limit)
                         Cupo completo
@@ -121,15 +129,22 @@
                 </label>
             </div>
         </div>
-        <button type="submit"
-            class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+        <button type="submit" id="nextStep"
+            class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2">
             Registrarme
         </button>
     </form>
 
     @slot('script')
         <script>
-
+            function alertChange() {
+                var selected = document.querySelector('input[type=radio][name=mode]:checked')
+                if (selected.value === '1') {
+                    document.getElementById('nextStep').innerHTML = 'Ir a pagar'
+                } else {
+                    document.getElementById('nextStep').innerHTML = 'Registrarme'
+                }
+            }
         </script>
     @endslot
 

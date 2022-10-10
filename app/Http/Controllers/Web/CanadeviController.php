@@ -23,7 +23,7 @@ class CanadeviController extends Controller
     public function create(): View
     {
         $counts = Canadevi::where('mode', Canadevi::PRESENT)->get()->count();
-        $limit = 100;
+        $limit = 200;
         return view('pages.canadevi.registration', compact('counts', 'limit'));
     }
 
@@ -50,10 +50,10 @@ class CanadeviController extends Controller
 
         QrCode::format('png')
             ->color(0, 0, 0)
-            ->generate(url('canadevi/validacion/' . $row->hash), '../public/qrcodes/canadevi_'.$row->id.'.png');
-            //->generate(url('canadevi/validacion/' . $row->hash), public_path('qrcodes/canadevi_' . $row->id . '.png'));
+            //->generate(url('canadevi/validacion/canadevi_' . $row->hash), '../public/qrcodes/canadevi_'.$row->id.'.png');
+            ->generate(url('canadevi/validacion/canadevi_' . $row->hash), public_path('qrcodes/canadevi_' . $row->id . '.png'));
 
-        Mail::to($row->email)->send(new RegisterCompleted('canadevi_' . $row->id));
+        Mail::to($row->email)->send(new RegisterCompleted('canadevi_' . $row->id, asset('images/foto_canadevi.png'), 1));
 
         return redirect()->route('thanks_canadevi', $row->hash);
     }
