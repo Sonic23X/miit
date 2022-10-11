@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('canadevis', function (Blueprint $table) {
+        Schema::create('races', function (Blueprint $table) {
             $table->id();
             $table->string('hash', 10);
             $table->string('name', 60);
@@ -22,11 +22,13 @@ return new class extends Migration
             $table->string('telephone', 11);
             $table->string('email', 200);
             $table->date('birthdate');
-            $table->string('company', 80);
-            $table->string('position', 120);
+            $table->tinyInteger('gender');
+            $table->string('size');
+            $table->integer('state');
+            $table->integer('city')->nullable();
+            $table->string('doc')->nullable();
             $table->tinyInteger('payment_mode')->default(0)->nullable();
             $table->tinyInteger('payment_status')->default(0)->nullable();
-            $table->tinyInteger('mode')->default(0);
             $table->tinyInteger('assistance')->default(0);
             $table->timestamps();
         });
@@ -39,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('canadevis');
+        Schema::dropIfExists('races');
     }
 };
