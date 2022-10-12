@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\{
     RegistrationController,
     CanadeviController,
+    RaceController,
     Admin\AdminController
 };
 
@@ -34,17 +35,22 @@ Route::domain('forocanadevihidalgo.' . env('APP_URL'))->group(function () {
     Route::get('/validacion/{hash}', [CanadeviController::class, 'confirm']);
 });
 
-/*
-Route::get('/formulario', [RegistrationController::class, 'create']);
-Route::get('/gracias/{hash}', [RegistrationController::class, 'thanks'])->name('thanks');
-Route::post('/formulario', [RegistrationController::class, 'store'])->name('form_store');
-Route::get('/validacion/{hash}', [RegistrationController::class, 'confirm']);
+Route::domain('carreracanadevi.' . env('APP_URL'))->group(function () {
+    Route::get('/', [RaceController::class, 'create']);
+    Route::get('/gracias/{hash}', [RaceController::class, 'thanks'])->name('thanks_race');
+    Route::post('/formulario', [RaceController::class, 'store'])->name('form_store_race');
+    Route::get('/validacion/{hash}', [RaceController::class, 'confirm']);
+    Route::get('/cities/{id}', [RaceController::class, 'getCities']);
+});
 
-Route::get('/canadevi/formulario', [CanadeviController::class, 'create']);
-Route::get('/canadevi/gracias/{hash}', [CanadeviController::class, 'thanks'])->name('thanks_canadevi');
-Route::post('/canadevi/formulario', [CanadeviController::class, 'store'])->name('form_store_canadevi');
-Route::get('/canadevi/validacion/{hash}', [CanadeviController::class, 'confirm']);
+/*
+Route::get('/formulario', [RaceController::class, 'create']);
+Route::get('/gracias/{hash}', [RaceController::class, 'thanks'])->name('thanks_race');
+Route::post('/formulario', [RaceController::class, 'store'])->name('form_store_race');
+Route::get('/validacion/{hash}', [RaceController::class, 'confirm']);
+Route::get('/cities/{id}', [RaceController::class, 'getCities']);
 */
+
 Route::middleware(['auth'])->group(function() {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 });
