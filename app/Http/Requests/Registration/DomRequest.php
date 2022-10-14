@@ -19,7 +19,6 @@ class DomRequest extends FormRequest
             'second_surname' => ['string', 'required'],
             'telephone' => ['numeric', 'unique:doms', 'required', 'min:10'],
             'email' => ['email', 'unique:doms', 'required'],
-            'birthdate' => ['date', 'required'],
             'type_visit' => ['string', 'required'],
             'bank' => ['string', 'nullable'],
             'other' => ['string', 'nullable']
