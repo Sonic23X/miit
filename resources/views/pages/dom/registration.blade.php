@@ -64,7 +64,7 @@
             <label for="type_visit" class="block mb-2 text-sm font-medium text-gray-900">¿De donde nos visita?</label>
             <select id="type_visit" name="type_visit" value="{{ old('type_visit') }}" onchange="typeVisit()" required
                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                <option class="hidden">Selecciona una opción</option>
+                <option class="hidden" value="">Selecciona una opción</option>
                 <option value="1">Banco</option>
                 <option value="2">Particular</option>
                 <option value="3">Otro</option>
