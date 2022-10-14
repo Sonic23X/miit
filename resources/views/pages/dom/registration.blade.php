@@ -7,13 +7,6 @@
             </span>
         </p>
     </div>
-    @if ($errors->any())
-        <div class="alert alert-danger mt-5 mb-5">
-            @php
-            dd($errors);
-            @endphp
-        </div>
-    @endif
     <form action="{{ route('form_store_dom') }}" method="POST">
         @csrf
         <div class="mb-6">
