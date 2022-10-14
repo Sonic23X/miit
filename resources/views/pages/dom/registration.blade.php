@@ -7,6 +7,15 @@
             </span>
         </p>
     </div>
+    @if ($errors->any())
+        <div class="alert alert-danger mt-5 mb-5">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form action="{{ route('form_store_dom') }}" method="POST">
         @csrf
         <div class="mb-6">
