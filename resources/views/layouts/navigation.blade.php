@@ -14,6 +14,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Inicio') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('forum')" :active="request()->routeIs('forum')">
+                        {{ __('Foro') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('race')" :active="request()->routeIs('race')">
+                        {{ __('Carrera') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -64,6 +70,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Inicio') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('forum')" :active="request()->routeIs('forum')">
+                {{ __('Foro') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('race')" :active="request()->routeIs('race')">
+                {{ __('Carrera') }}
             </x-responsive-nav-link>
         </div>
 

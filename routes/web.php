@@ -6,8 +6,14 @@ use App\Http\Controllers\Web\{
     RegistrationController,
     CanadeviController,
     RaceController,
+    DomController,
     Admin\AdminController
 };
+
+
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Models\Canadevi;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,16 +49,40 @@ Route::domain('carreracanadevi.' . env('APP_URL'))->group(function () {
     Route::get('/cities/{id}', [RaceController::class, 'getCities']);
 });
 
+Route::domain('access.' . env('APP_URL'))->group(function ()
+{
+    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('register', [RegisteredUserController::class, 'store']);
+
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
+
+Route::domain('dom.' . env('APP_URL'))->group(function () {
+    Route::get('/formulario', [DomController::class, 'create']);
+    Route::get('/gracias/{hash}', [DomController::class, 'thanks'])->name('thanks_dom');
+    Route::post('/formulario', [DomController::class, 'store'])->name('form_store_dom');
+    Route::get('/validacion/{hash}', [DomController::class, 'confirm']);
+});
+
 /*
-Route::get('/formulario', [RaceController::class, 'create']);
-Route::get('/gracias/{hash}', [RaceController::class, 'thanks'])->name('thanks_race');
-Route::post('/formulario', [RaceController::class, 'store'])->name('form_store_race');
-Route::get('/validacion/{hash}', [RaceController::class, 'confirm']);
-Route::get('/cities/{id}', [RaceController::class, 'getCities']);
+Route::get('/formulario', [DomController::class, 'create']);
+Route::get('/gracias/{hash}', [DomController::class, 'thanks'])->name('thanks_dom');
+Route::post('/formulario', [DomController::class, 'store'])->name('form_store_dom');
+Route::get('/validacion/{hash}', [DomController::class, 'confirm']);
 */
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('forum', [AdminController::class, 'indexForum'])->name('forum');
+    Route::get('race', [AdminController::class, 'indexRace'])->name('race');
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
-require __DIR__.'/auth.php';
+
+Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('register', [RegisteredUserController::class, 'store']);
+Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
