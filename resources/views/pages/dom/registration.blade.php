@@ -124,6 +124,10 @@
                     bank.classList.add('hidden')
                     other.classList.remove('hidden')
                 }
+                else {
+                    bank.classList.add('hidden')
+                    other.classList.add('hidden')
+                }
             }
 
         </script>
