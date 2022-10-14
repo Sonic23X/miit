@@ -60,7 +60,7 @@ Route::domain('access.' . env('APP_URL'))->group(function ()
 });
 
 Route::domain('dom.' . env('APP_URL'))->group(function () {
-    Route::get('/formulario', [DomController::class, 'create']);
+    Route::get('/', [DomController::class, 'create']);
     Route::get('/gracias/{hash}', [DomController::class, 'thanks'])->name('thanks_dom');
     Route::post('/formulario', [DomController::class, 'store'])->name('form_store_dom');
     Route::get('/validacion/{hash}', [DomController::class, 'confirm']);
