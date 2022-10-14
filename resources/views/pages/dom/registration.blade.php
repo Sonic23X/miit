@@ -9,11 +9,9 @@
     </div>
     @if ($errors->any())
         <div class="alert alert-danger mt-5 mb-5">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            @php
+            dd($errors);
+            @endphp
         </div>
     @endif
     <form action="{{ route('form_store_dom') }}" method="POST">
