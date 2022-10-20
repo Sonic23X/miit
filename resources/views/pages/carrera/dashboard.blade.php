@@ -14,9 +14,6 @@
                                     Modalidad
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Invitado
-                                </th>
-                                <th scope="col" class="py-3 px-6">
                                     Pago físico
                                 </th>
                                 <th scope="col" class="py-3 px-6">
@@ -25,72 +22,61 @@
                                 <th scope="col" class="py-3 px-6">
                                     Pago con tarjeta
                                 </th>
-                                <th></th>
+                                <th scope="col" class="py-3 px-6">
+
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($registration as $row)
-                            <tr class="bg-white border-b">
+                            <tr class="bg-white border-bottom">
                                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                     {{ $row->name }} {{ $row->first_surname }} {{ $row->second_surname }}
                                 </th>
                                 <td class="py-4 px-6">
-                                    @if ($row->mode === App\Models\Canadevi::PRESENT)
-                                    Presencial
+                                    @if ($row->event === App\Models\Race::WALK)
+                                    Caminata 3 KM
                                     @else
-                                    Virtual
+                                    Carrera
                                     @endif
                                 </td>
                                 <td class="py-4 px-6">
                                     <div class="flex justify-center">
-                                        <input id="option_{{ App\Models\Canadevi::MODE_INV . '_' . $row->id }}" type="checkbox" value="{{ App\Models\Canadevi::MODE_INV }}"
-                                            @if ($row->payment_mode === App\Models\Canadevi::MODE_INV) checked @endif
-                                            @if ($row->payment_status === 1)
-                                            disabled
-                                            class="w-4 h-4 text-blue-600 bg-gray-400 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                            @else
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                            @endif
-                                            onclick="validate({{ App\Models\Canadevi::MODE_INV }}, {{ $row->id }})">
+                                        <input id="option_{{ App\Models\Race::MODE_FIS . '_' . $row->id }}" type="checkbox" value="{{ App\Models\Race::MODE_FIS }}"
+                                        @if ($row->payment_mode === App\Models\Race::MODE_FIS) checked @endif
+                                        @if ($row->payment_status === 1)
+                                        disabled
+                                        class="w-4 h-4 text-blue-600 bg-gray-400 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                        @else
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                        @endif
+                                        onclick="validate({{ App\Models\Race::MODE_FIS }}, {{ $row->id }})">
                                     </div>
                                 </td>
                                 <td class="py-4 px-6">
                                     <div class="flex justify-center">
-                                        <input id="option_{{ App\Models\Canadevi::MODE_FIS . '_' . $row->id }}" type="checkbox" value="1"
-                                            @if ($row->payment_mode === App\Models\Canadevi::MODE_FIS) checked @endif
-                                            @if ($row->payment_status === 1)
+                                        <input id="option_{{ App\Models\Race::MODE_TRANS . '_' . $row->id }}" type="checkbox" value="{{ App\Models\Race::MODE_TRANS }}"
+                                            @if ($row->payment_mode === App\Models\Race::MODE_TRANS) checked @endif
+                                            @if ($row->payment_mode !== 0 && $row->payment_status === 1)
                                             disabled
                                             class="w-4 h-4 text-blue-600 bg-gray-400 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
                                             @else
                                             class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
                                             @endif
-                                            onclick="validate({{ App\Models\Canadevi::MODE_FIS }}, {{ $row->id }})">
+                                            onclick="validate({{ App\Models\Race::MODE_TRANS }}, {{ $row->id }})">
                                     </div>
                                 </td>
                                 <td class="py-4 px-6">
                                     <div class="flex justify-center">
-                                        <input id="option_{{ App\Models\Canadevi::MODE_TRANS . '_' . $row->id }}" type="checkbox" value="1"
-                                            @if ($row->payment_mode === App\Models\Canadevi::MODE_TRANS) checked @endif
-                                            @if ($row->payment_status === 1)
+                                        <input id="option_{{ App\Models\Race::MODE_CARD . '_' . $row->id }}" type="checkbox" value="{{ App\Models\Race::MODE_CARD }}"
+                                            @if ($row->payment_mode === App\Models\Race::MODE_CARD) checked @endif
+                                            @if ($row->payment_mode != 0 && $row->payment_status == 1)
                                             disabled
                                             class="w-4 h-4 text-blue-600 bg-gray-400 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
                                             @else
                                             class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
                                             @endif
-                                            onclick="validate({{ App\Models\Canadevi::MODE_TRANS }}, {{ $row->id }})">
-                                    </div>
-                                </td>
-                                <td class="py-4 px-6">
-                                    <div class="flex justify-center">
-                                        <input id="option_{{ App\Models\Canadevi::MODE_CARD . '_' . $row->id }}" type="checkbox" value="1"
-                                            @if ($row->payment_mode === App\Models\Canadevi::MODE_CARD) checked @endif
-                                            @if ($row->payment_status === 1)
-                                            disabled
-                                            class="w-4 h-4 text-blue-600 bg-gray-400 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                            @else
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                            @endif
-                                            onclick="validate({{ App\Models\Canadevi::MODE_CARD }}, {{ $row->id }})">
+                                            onclick="validate({{ App\Models\Race::MODE_CARD }}, {{ $row->id }})">
                                     </div>
                                 </td>
                                 <td class="py-4 px-6" id="row_user_{{ $row->id }}">
@@ -118,16 +104,14 @@
         function setPayment(id) {
             let selection = null;
 
-            if (document.getElementById(`option_{{ App\Models\Canadevi::MODE_CARD }}_${id}`).checked)
-                selection = {{ App\Models\Canadevi::MODE_CARD }}
-            else if (document.getElementById(`option_{{ App\Models\Canadevi::MODE_TRANS }}_${id}`).checked)
-                selection = {{ App\Models\Canadevi::MODE_TRANS }}
-            else if (document.getElementById(`option_{{ App\Models\Canadevi::MODE_FIS }}_${id}`).checked)
-                selection = {{ App\Models\Canadevi::MODE_FIS }}
-            else if (document.getElementById(`option_{{ App\Models\Canadevi::MODE_INV }}_${id}`).checked)
-                selection = {{ App\Models\Canadevi::MODE_INV }}
+            if (document.getElementById(`option_{{ App\Models\Race::MODE_CARD }}_${id}`).checked)
+                selection = {{ App\Models\Race::MODE_CARD }}
+            else if (document.getElementById(`option_{{ App\Models\Race::MODE_TRANS }}_${id}`).checked)
+                selection = {{ App\Models\Race::MODE_TRANS }}
+            else if (document.getElementById(`option_{{ App\Models\Race::MODE_FIS }}_${id}`).checked)
+                selection = {{ App\Models\Race::MODE_FIS }}
 
-            fetch('{{ url("api/admin/forum") }}', {
+            fetch('{{ url("api/admin/race") }}', {
                 headers:{
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -152,11 +136,6 @@
                 fis.classList.remove('bg-gray-100')
                 fis.classList.add('bg-gray-400')
 
-                let inv = document.getElementById(`option_{{ App\Models\Canadevi::MODE_INV }}_${id}`)
-                inv.disabled = true
-                inv.classList.remove('bg-gray-100')
-                inv.classList.add('bg-gray-400')
-
                 document.getElementById(`row_user_${id}`).innerHTML = ''
 
                 Swal.fire({
@@ -164,37 +143,28 @@
                     title: '¡Hecho!',
                     text: result.message,
                 })
+
             });
         }
 
         function validate(type, id) {
             switch (type) {
-                case {{ App\Models\Canadevi::MODE_CARD }}:
+                case {{ App\Models\Race::MODE_CARD }}:
                     if (document.getElementById(`option_${type}_${id}`).checked) {
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_TRANS }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_FIS }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_INV }}}_${id}`).checked = false
+                        document.getElementById(`option_{{{ App\Models\Race::MODE_TRANS }}}_${id}`).checked = false
+                        document.getElementById(`option_{{{ App\Models\Race::MODE_FIS }}}_${id}`).checked = false
                     }
                     break;
-                case {{ App\Models\Canadevi::MODE_TRANS }}:
+                case {{ App\Models\Race::MODE_TRANS }}:
                     if (document.getElementById(`option_${type}_${id}`).checked) {
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_CARD }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_FIS }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_INV }}}_${id}`).checked = false
+                        document.getElementById(`option_{{{ App\Models\Race::MODE_CARD }}}_${id}`).checked = false
+                        document.getElementById(`option_{{{ App\Models\Race::MODE_FIS }}}_${id}`).checked = false
                     }
                     break;
-                case {{ App\Models\Canadevi::MODE_FIS }}:
+                case {{ App\Models\Race::MODE_FIS }}:
                     if (document.getElementById(`option_${type}_${id}`).checked) {
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_CARD }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_TRANS }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_INV }}}_${id}`).checked = false
-                    }
-                    break;
-                case {{ App\Models\Canadevi::MODE_INV }}:
-                    if (document.getElementById(`option_${type}_${id}`).checked) {
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_FIS }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_CARD }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_TRANS }}}_${id}`).checked = false
+                        document.getElementById(`option_{{{ App\Models\Race::MODE_CARD }}}_${id}`).checked = false
+                        document.getElementById(`option_{{{ App\Models\Race::MODE_TRANS }}}_${id}`).checked = false
                     }
                     break;
             }

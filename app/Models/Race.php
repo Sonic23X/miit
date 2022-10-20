@@ -9,6 +9,13 @@ class Race extends Model
 {
     use HasFactory;
 
+    public const WALK = 0;
+    public const RACE = 1;
+
+    public const MODE_TRANS = 1;
+    public const MODE_CARD = 2;
+    public const MODE_FIS = 3;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,6 +34,7 @@ class Race extends Model
         'state',
         'city',
         'doc',
+        'event',
         'payment_mode',
         'payment_status',
         'assistance'

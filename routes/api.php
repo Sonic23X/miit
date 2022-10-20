@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RegistrationController;
+use App\Http\Controllers\Api\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/webhook', [RegistrationController::class, 'register']);
+
+Route::post('admin/race', [AdminController::class, 'setPaymentRace']);
+Route::post('admin/forum', [AdminController::class, 'setPaymentForum']);
+

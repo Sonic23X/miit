@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\{
     Canadevi,
+    Race,
     Registration
 };
 
@@ -30,7 +31,7 @@ class AdminController extends Controller
      */
     public function indexRace(): View
     {
-        return view('dashboard', ['registration' => Registration::query()->paginate(10)]);
+        return view('pages.carrera.dashboard', ['registration' => Race::query()->paginate(10)]);
     }
 
     /**
@@ -40,6 +41,6 @@ class AdminController extends Controller
      */
     public function indexForum(): View
     {
-        return view('dashboard', ['registration' => Registration::query()->paginate(10)]);
+        return view('pages.canadevi.dashboard', ['registration' => Canadevi::query()->paginate(10)]);
     }
 }
