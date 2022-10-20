@@ -57,10 +57,14 @@ Route::domain('dom.' . env('APP_URL'))->group(function () {
 });
 
 Route::domain('access.' . env('APP_URL'))->group(function () {
+    Route::get('/', function () {
+        return redirect('/login');
+    });
+
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
