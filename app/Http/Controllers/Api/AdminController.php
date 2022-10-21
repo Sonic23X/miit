@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Mail\PaymentCompleted;
+use Illuminate\Support\Facades\Mail;
 use App\Models\{
     Canadevi,
-    Race,
-    Registration
+    Race
 };
 
 class AdminController extends Controller
@@ -45,6 +46,13 @@ class AdminController extends Controller
                 $user->payment_status = 1;
                 $user->save();
 
+                Mail::to($user->email)->send(new PaymentCompleted(
+                    'race_' . $user->id,
+                    asset('images/logo_carrera.png'),
+                    2,
+                    $user->name
+                ));
+
                 return response()->json([], 200);
             }
             else if ($conekta->data['object']['amount'] === 70000) {
@@ -53,6 +61,13 @@ class AdminController extends Controller
                 $user->payment_mode = Canadevi::MODE_CARD;
                 $user->payment_status = 1;
                 $user->save();
+
+                Mail::to($user->email)->send(new PaymentCompleted(
+                    'canadevi_' . $user->id,
+                    asset('images/foto_canadevi.png'),
+                    1,
+                    $user->name
+                ));
 
                 return response()->json([], 200);
             }
