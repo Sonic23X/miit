@@ -20,9 +20,6 @@
                                     Pago físico
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Transferencia
-                                </th>
-                                <th scope="col" class="py-3 px-6">
                                     Pago con tarjeta
                                 </th>
                                 <th></th>
@@ -69,19 +66,6 @@
                                 </td>
                                 <td class="py-4 px-6">
                                     <div class="flex justify-center">
-                                        <input id="option_{{ App\Models\Canadevi::MODE_TRANS . '_' . $row->id }}" type="checkbox" value="1"
-                                            @if ($row->payment_mode === App\Models\Canadevi::MODE_TRANS) checked @endif
-                                            @if ($row->payment_status === 1)
-                                            disabled
-                                            class="w-4 h-4 text-blue-600 bg-gray-400 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                            @else
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                            @endif
-                                            onclick="validate({{ App\Models\Canadevi::MODE_TRANS }}, {{ $row->id }})">
-                                    </div>
-                                </td>
-                                <td class="py-4 px-6">
-                                    <div class="flex justify-center">
                                         <input id="option_{{ App\Models\Canadevi::MODE_CARD . '_' . $row->id }}" type="checkbox" value="1"
                                             @if ($row->payment_mode === App\Models\Canadevi::MODE_CARD) checked @endif
                                             @if ($row->payment_status === 1)
@@ -120,8 +104,6 @@
 
             if (document.getElementById(`option_{{ App\Models\Canadevi::MODE_CARD }}_${id}`).checked)
                 selection = {{ App\Models\Canadevi::MODE_CARD }}
-            else if (document.getElementById(`option_{{ App\Models\Canadevi::MODE_TRANS }}_${id}`).checked)
-                selection = {{ App\Models\Canadevi::MODE_TRANS }}
             else if (document.getElementById(`option_{{ App\Models\Canadevi::MODE_FIS }}_${id}`).checked)
                 selection = {{ App\Models\Canadevi::MODE_FIS }}
             else if (document.getElementById(`option_{{ App\Models\Canadevi::MODE_INV }}_${id}`).checked)
@@ -141,11 +123,6 @@
                 card.disabled = true
                 card.classList.remove('bg-gray-100')
                 card.classList.add('bg-gray-400')
-
-                let trans = document.getElementById(`option_{{ App\Models\Canadevi::MODE_TRANS }}_${id}`)
-                trans.disabled = true
-                trans.classList.remove('bg-gray-100')
-                trans.classList.add('bg-gray-400')
 
                 let fis = document.getElementById(`option_{{ App\Models\Canadevi::MODE_FIS }}_${id}`)
                 fis.disabled = true
@@ -171,14 +148,6 @@
             switch (type) {
                 case {{ App\Models\Canadevi::MODE_CARD }}:
                     if (document.getElementById(`option_${type}_${id}`).checked) {
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_TRANS }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_FIS }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_INV }}}_${id}`).checked = false
-                    }
-                    break;
-                case {{ App\Models\Canadevi::MODE_TRANS }}:
-                    if (document.getElementById(`option_${type}_${id}`).checked) {
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_CARD }}}_${id}`).checked = false
                         document.getElementById(`option_{{{ App\Models\Canadevi::MODE_FIS }}}_${id}`).checked = false
                         document.getElementById(`option_{{{ App\Models\Canadevi::MODE_INV }}}_${id}`).checked = false
                     }
@@ -186,7 +155,6 @@
                 case {{ App\Models\Canadevi::MODE_FIS }}:
                     if (document.getElementById(`option_${type}_${id}`).checked) {
                         document.getElementById(`option_{{{ App\Models\Canadevi::MODE_CARD }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_TRANS }}}_${id}`).checked = false
                         document.getElementById(`option_{{{ App\Models\Canadevi::MODE_INV }}}_${id}`).checked = false
                     }
                     break;
@@ -194,7 +162,6 @@
                     if (document.getElementById(`option_${type}_${id}`).checked) {
                         document.getElementById(`option_{{{ App\Models\Canadevi::MODE_FIS }}}_${id}`).checked = false
                         document.getElementById(`option_{{{ App\Models\Canadevi::MODE_CARD }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Canadevi::MODE_TRANS }}}_${id}`).checked = false
                     }
                     break;
             }

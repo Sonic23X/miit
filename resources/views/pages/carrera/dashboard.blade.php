@@ -17,9 +17,6 @@
                                     Pago físico
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Transferencia
-                                </th>
-                                <th scope="col" class="py-3 px-6">
                                     Pago con tarjeta
                                 </th>
                                 <th scope="col" class="py-3 px-6">
@@ -51,19 +48,6 @@
                                         class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
                                         @endif
                                         onclick="validate({{ App\Models\Race::MODE_FIS }}, {{ $row->id }})">
-                                    </div>
-                                </td>
-                                <td class="py-4 px-6">
-                                    <div class="flex justify-center">
-                                        <input id="option_{{ App\Models\Race::MODE_TRANS . '_' . $row->id }}" type="checkbox" value="{{ App\Models\Race::MODE_TRANS }}"
-                                            @if ($row->payment_mode === App\Models\Race::MODE_TRANS) checked @endif
-                                            @if ($row->payment_mode !== 0 && $row->payment_status === 1)
-                                            disabled
-                                            class="w-4 h-4 text-blue-600 bg-gray-400 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                            @else
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                            @endif
-                                            onclick="validate({{ App\Models\Race::MODE_TRANS }}, {{ $row->id }})">
                                     </div>
                                 </td>
                                 <td class="py-4 px-6">
@@ -106,8 +90,6 @@
 
             if (document.getElementById(`option_{{ App\Models\Race::MODE_CARD }}_${id}`).checked)
                 selection = {{ App\Models\Race::MODE_CARD }}
-            else if (document.getElementById(`option_{{ App\Models\Race::MODE_TRANS }}_${id}`).checked)
-                selection = {{ App\Models\Race::MODE_TRANS }}
             else if (document.getElementById(`option_{{ App\Models\Race::MODE_FIS }}_${id}`).checked)
                 selection = {{ App\Models\Race::MODE_FIS }}
 
@@ -125,11 +107,6 @@
                 card.disabled = true
                 card.classList.remove('bg-gray-100')
                 card.classList.add('bg-gray-400')
-
-                let trans = document.getElementById(`option_{{ App\Models\Canadevi::MODE_TRANS }}_${id}`)
-                trans.disabled = true
-                trans.classList.remove('bg-gray-100')
-                trans.classList.add('bg-gray-400')
 
                 let fis = document.getElementById(`option_{{ App\Models\Canadevi::MODE_FIS }}_${id}`)
                 fis.disabled = true
