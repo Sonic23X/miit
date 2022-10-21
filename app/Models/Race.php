@@ -9,8 +9,8 @@ class Race extends Model
 {
     use HasFactory;
 
-    public const WALK = 0;
-    public const RACE = 1;
+    public const WALK = 1;
+    public const RACE = 0;
 
     public const MODE_TRANS = 1;
     public const MODE_CARD = 2;

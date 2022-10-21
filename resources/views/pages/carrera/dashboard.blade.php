@@ -46,7 +46,7 @@
                                     @if ($row->event === App\Models\Race::WALK)
                                     Caminata 3 KM
                                     @else
-                                    Carrera
+                                    Carrera 7 KM
                                     @endif
                                 </td>
                                 <td class="py-4 px-6">
