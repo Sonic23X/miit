@@ -39,9 +39,9 @@ class AdminController extends Controller
     public function payment(Request $request) {
         \Log::info($request);
 
-        if ($request->data->type === "charge.paid") {
-            if ($request->data->object->amount === 16000 || $request->data->object->amount === 6000) {
-                $user = Race::where('email', $request->data->object->customer_info->email)->first();
+        if ($request->data['type'] === "charge.paid") {
+            if ($request->data['object']['amount'] === 16000 || $request->data['object']['amount'] === 6000) {
+                $user = Race::where('email', $request->data['object']['customer_info']['email'])->first();
                 $user->payment_mode = Race::MODE_CARD;
                 $user->payment_status = 1;
 
@@ -49,9 +49,9 @@ class AdminController extends Controller
 
                 return response()->json([], 200);
             }
-            else if ($request->data->object->amount === 70000) {
-                $user = Canadevi::where('email', $request->data->object->customer_info->email)->first();
-                $user->payment_mode = Race::MODE_CARD;
+            else if ($request->data['object']['amount'] === 70000) {
+                $user = Canadevi::where('email', $request->data['object']['customer_info']['email'])->first();
+                $user->payment_mode = Canadevi::MODE_CARD;
                 $user->payment_status = 1;
 
                 $user->save();
