@@ -5,7 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('forum') }}">
+                        <img class="block h-28 w-auto" src="{{ asset('images/logo_miit.png') }}" />
                     </a>
                 </div>
 
