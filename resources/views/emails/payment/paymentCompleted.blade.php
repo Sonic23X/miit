@@ -4,6 +4,7 @@
     <img src="{{ $image }}" alt="logo_foro_canadevi_2022"
         style="height: 6rem; margin-bottom: 1.5rem;">
 </div>
+
 Hola {{ $nombre }}. ¡Gracias por tu pago!
 
 A continuación te mandamos el código QR que necesitarás presentar para tu acceso al evento.  Recuerda llegar a tiempo, ya que el registro empieza 8:30 am y el evento a las 9:00 am.
@@ -13,6 +14,7 @@ A continuación te mandamos el código QR que necesitarás presentar para tu acc
     <img src="{{ $image }}" alt="logo_carrera_2022"
         style="height: 6rem; margin-bottom: 1.5rem;">
 </div>
+
 Hola {{ $nombre }}. ¡Gracias por tu pago!
 
 A continuación te mandamos el código QR que necesitarás presentar para tu acceso a la carrera.  Recuerda que tienes que estar en el Estadio Revolución a las 7:15 para empezar el calentamiento.  La carrera sale a las 7:30 am y la caminata a las 7:45 am.
