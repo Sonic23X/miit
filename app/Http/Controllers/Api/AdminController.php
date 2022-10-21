@@ -22,6 +22,13 @@ class AdminController extends Controller
 
         $user->save();
 
+        Mail::to($user->email)->send(new PaymentCompleted(
+            'race_' . $user->id,
+            asset('images/logo_carrera.png'),
+            2,
+            $user->name
+        ));
+
         return response()->json(['message' => '¡Proceso completado con exito!'], 200);
     }
 
@@ -33,6 +40,13 @@ class AdminController extends Controller
         $user->payment_status = 1;
 
         $user->save();
+
+        Mail::to($user->email)->send(new PaymentCompleted(
+            'canadevi_' . $user->id,
+            asset('images/foto_canadevi.png'),
+            1,
+            $user->name
+        ));
 
         return response()->json(['message' => '¡Proceso completado con exito!'], 200);
     }

@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use \Illuminate\Mail\Mailables\Attachment;
 
 class RegisterCompleted extends Mailable
 {
@@ -28,6 +29,23 @@ class RegisterCompleted extends Mailable
         $this->type = $type;
         $this->urlPayment = $url;
         $this->name = $nombre;
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return \Illuminate\Mail\Mailables\Attachment[]
+     */
+    public function attachments()
+    {
+        if ($this->type === 3)
+            return [
+                Attachment::fromPath(asset('pdf/convocatoria_carrera.pdf'))
+                ->as('Convocatoria.pdf')
+                ->withMime('application/pdf'),
+            ];
+        else
+            return [ ];
     }
 
     /**
