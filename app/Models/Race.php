@@ -33,7 +33,6 @@ class Race extends Model
         'size',
         'state',
         'city',
-        'doc',
         'event',
         'payment_mode',
         'payment_status',

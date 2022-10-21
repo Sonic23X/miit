@@ -5,7 +5,7 @@
     <div class="flex flex-col">
         <div class="flex justify-center">
             <span class="font-bold text-2xl mt-2">
-                ¡Gracias por haberte registrado a la Carrera 7K Canadevi Hidalgo 2022!
+                ¡Gracias por haberte registrado a la Carrera Canadevi Hidalgo 2022!
             </span>
         </div>
         <div class="flex justify-center mt-3">

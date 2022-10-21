@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Registration;
 
 class RegisterCompleted extends Mailable
 {
@@ -14,17 +13,21 @@ class RegisterCompleted extends Mailable
     private $registration;
     private $image;
     private $type;
+    private $name;
+    private $urlPayment;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(string $row, string $route, $type)
+    public function __construct(string $row, string $route, int $type, string $url, string $nombre = '')
     {
         $this->registration = $row;
         $this->image = $route;
         $this->type = $type;
+        $this->urlPayment = $url;
+        $this->name = $nombre;
     }
 
     /**
@@ -38,6 +41,8 @@ class RegisterCompleted extends Mailable
                 ->subject("¡Registro completado!")
                 ->with('registration', $this->registration)
                 ->with('type', $this->type)
-                ->with('image', $this->image);
+                ->with('image', $this->image)
+                ->with('urlPayment', $this->urlPayment)
+                ->with('nombre', $this->name);
     }
 }

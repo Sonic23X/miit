@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Registration\RaceRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
@@ -12,6 +12,9 @@ use App\Mail\RegisterCompleted;
 use App\Models\City;
 use App\Models\Race;
 use App\Models\State;
+use Carbon\Carbon;
+use Conekta\Checkout;
+use Conekta\Conekta;
 
 class RaceController extends Controller
 {
@@ -35,7 +38,7 @@ class RaceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RaceRequest $request)
     {
         $row = Race::create([
             'hash' => Str::random(10),
@@ -57,7 +60,15 @@ class RaceController extends Controller
             //->generate(url('canadevi/validacion/race_' . $row->hash), '../public/qrcodes/race_' . $row->id . '.png');
             ->generate(url('canadevi/validacion/race_' . $row->hash), public_path('qrcodes/race_' . $row->id . '.png'));
 
-        //Mail::to($row->email)->send(new RegisterCompleted('race_' . $row->id, asset('images/logo_carrera.png'), 2));
+        $conektaInfo = $this->doPaymentLink($row);
+
+        Mail::to($row->email)->send(new RegisterCompleted(
+            'race_' . $row->id,
+            asset('images/logo_carrera.png'),
+            3,
+            $conektaInfo->url,
+            $row->name
+        ));
 
         return redirect()->route('thanks_race', $row->hash);
     }
@@ -110,5 +121,46 @@ class RaceController extends Controller
         }
 
         echo 'trabajo hecho';
+    }
+
+    public function doPaymentLink($user)
+    {
+        $productName = '';
+        $productCost = 0;
+        if ($user->event == 0) {
+            $productName = 'Acceso a evento - Carrera 7 KM';
+            $productCost = 16000;
+        } else {
+            $productName = 'Acceso a evento - Caminata 3 KM';
+            $productCost = 6000;
+        }
+
+        $dateExpires = Carbon::now()->addDay(30);
+
+        Conekta::setApiKey(env('CONEKTA_PRIV_KEY'));
+
+        $validCheckout = [
+            'name' => "Carrera Canadevi Hidalgo 2022",
+            'type' => "PaymentLink",
+            'recurrent' => false,
+            'expires_at' => $dateExpires->timestamp,
+            'allowed_payment_methods' => [ "card" ],
+            'needs_shipping_contact' => false,
+            'order_template' => [
+                'line_items' => [[
+                    'name' => $productName,
+                    'unit_price' => $productCost,
+                    'quantity' => 1
+                ]],
+                'currency' => "MXN",
+                'customer_info' => [
+                    'name' => $user->name . ' ' . $user->first_surname . ' ' . $user->second_surname,
+                    'email' => $user->email,
+                    'phone' => $user->telephone
+                ]
+            ]
+        ];
+
+        return Checkout::create($validCheckout);
     }
 }
