@@ -11,6 +11,12 @@
                                     Nombre
                                 </th>
                                 <th scope="col" class="py-3 px-6">
+                                    Correo
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    Teléfono
+                                </th>
+                                <th scope="col" class="py-3 px-6">
                                     Modalidad
                                 </th>
                                 <th scope="col" class="py-3 px-6">
@@ -30,6 +36,12 @@
                                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                     {{ $row->name }} {{ $row->first_surname }} {{ $row->second_surname }}
                                 </th>
+                                <td class="py-4 px-6">
+                                   {{ $row->email }}
+                                </td>
+                                <td class="py-4 px-6">
+                                    {{ $row->telephone }}
+                                </td>
                                 <td class="py-4 px-6">
                                     @if ($row->event === App\Models\Race::WALK)
                                     Caminata 3 KM
