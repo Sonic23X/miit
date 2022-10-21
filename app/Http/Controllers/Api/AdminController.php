@@ -36,24 +36,22 @@ class AdminController extends Controller
         return response()->json(['message' => '¡Proceso completado con exito!'], 200);
     }
 
-    public function payment(Request $request) {
-        \Log::info($request);
+    public function payment(Request $conekta) {
+        if ($conekta->type === "order.paid") {
+            if ($conekta->data['object']['amount'] === 16000 || $conekta->data['object']['amount'] === 6000) {
+                $user = Race::where('email', $conekta->data['object']['customer_info']['email'])->first();
 
-        if ($request->data['type'] === "charge.paid") {
-            if ($request->data['object']['amount'] === 16000 || $request->data['object']['amount'] === 6000) {
-                $user = Race::where('email', $request->data['object']['customer_info']['email'])->first();
                 $user->payment_mode = Race::MODE_CARD;
                 $user->payment_status = 1;
-
                 $user->save();
 
                 return response()->json([], 200);
             }
-            else if ($request->data['object']['amount'] === 70000) {
-                $user = Canadevi::where('email', $request->data['object']['customer_info']['email'])->first();
+            else if ($conekta->data['object']['amount'] === 70000) {
+                $user = Canadevi::where('email', $conekta->data['object']['customer_info']['email'])->first();
+
                 $user->payment_mode = Canadevi::MODE_CARD;
                 $user->payment_status = 1;
-
                 $user->save();
 
                 return response()->json([], 200);
