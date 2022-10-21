@@ -35,4 +35,8 @@ class AdminController extends Controller
 
         return response()->json(['message' => '¡Proceso completado con exito!'], 200);
     }
+
+    public function payment(Request $request) {
+        \Log::info($request);
+    }
 }

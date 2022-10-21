@@ -25,3 +25,5 @@ Route::post('/webhook', [RegistrationController::class, 'register']);
 Route::post('admin/race', [AdminController::class, 'setPaymentRace']);
 Route::post('admin/forum', [AdminController::class, 'setPaymentForum']);
 
+Route::post('admin/payment', [AdminController::class, 'payment']);
+
