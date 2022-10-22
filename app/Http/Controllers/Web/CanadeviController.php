@@ -11,6 +11,9 @@ use Illuminate\Contracts\View\View;
 use App\Mail\RegisterCompleted;
 use Illuminate\Support\Str;
 use App\Models\Canadevi;
+use Carbon\Carbon;
+use Conekta\Checkout;
+use Conekta\Conekta;
 
 class CanadeviController extends Controller
 {
@@ -53,7 +56,25 @@ class CanadeviController extends Controller
             //->generate(url('canadevi/validacion/canadevi_' . $row->hash), '../public/qrcodes/canadevi_'.$row->id.'.png');
             ->generate(url('canadevi/validacion/canadevi_' . $row->hash), public_path('qrcodes/canadevi_' . $row->id . '.png'));
 
-        Mail::to($row->email)->send(new RegisterCompleted('canadevi_' . $row->id, asset('images/foto_canadevi.png'), 1));
+        if ($row->mode == 0) {
+            Mail::to($row->email)->send(new RegisterCompleted(
+                'canadevi_' . $row->id,
+                asset('images/foto_canadevi.png'),
+                2,
+                '',
+                $row->name
+            ));
+        }
+        else if ($row->mode == 1) {
+            $conektaInfo = $this->doPaymentLink($row);
+            Mail::to($row->email)->send(new RegisterCompleted(
+                'canadevi_' . $row->id,
+                asset('images/foto_canadevi.png'),
+                1,
+                $conektaInfo->url,
+                $row->name
+            ));
+        }
 
         return redirect()->route('thanks_canadevi', $row->hash);
     }
@@ -79,5 +100,39 @@ class CanadeviController extends Controller
         ];
 
         return view('pages.canadevi.validate', $data);
+    }
+
+    public function doPaymentLink($user)
+    {
+        $productName = 'Acceso al foro';
+        $productCost = 70000;
+
+        $dateExpires = Carbon::now()->addDay(30);
+
+        Conekta::setApiKey(env('CONEKTA_PRIV_KEY'));
+
+        $validCheckout = [
+            'name' => "Foro Canadevi Hidalgo 2022",
+            'type' => "PaymentLink",
+            'recurrent' => false,
+            'expires_at' => $dateExpires->timestamp,
+            'allowed_payment_methods' => ["card"],
+            'needs_shipping_contact' => false,
+            'order_template' => [
+                'line_items' => [[
+                    'name' => $productName,
+                    'unit_price' => $productCost,
+                    'quantity' => 1
+                ]],
+                'currency' => "MXN",
+                'customer_info' => [
+                    'name' => $user->name . ' ' . $user->first_surname . ' ' . $user->second_surname,
+                    'email' => $user->email,
+                    'phone' => $user->telephone
+                ]
+            ]
+        ];
+
+        return Checkout::create($validCheckout);
     }
 }

@@ -4,10 +4,11 @@
     <img src="{{ $image }}" alt="logo_foro_canadevi_2022"
         style="height: 6rem; margin-bottom: 1.5rem;">
 </div>
+
 # Hola {{ $nombre ?? '' }} ¡Gracias por haberte registrado al evento Foro Canadevi Hidalgo 2022 en su forma presencial!
 
 El evento se llevará a cabo en el Salón Aléria el 27 de Octubre de 2022, donde el registro es a partir de las 8:30 am.
-Para poder confirmar tu asistencia, será necesario hacer un pago de $700.00 en la siguiente <a href="https://pay.conekta.com/link/46da4310636949178db1f021dac5c714">liga</a>.
+Para poder confirmar tu asistencia, será necesario hacer un pago de $700.00 en la siguiente <a href="{{ $urlPayment }}">liga</a>.
 
 
 Una vez que se haya confirmado el pago, recibirás otro correo con la confirmación y tu QR para el acceso al evento.
@@ -17,6 +18,7 @@ Una vez que se haya confirmado el pago, recibirás otro correo con la confirmaci
     <img src="{{ $image }}" alt="logo_foro_canadevi_2022"
         style="height: 6rem; margin-bottom: 1.5rem;">
 </div>
+
 # ¡Gracias por haberte registrado al evento Foro Canadevi Hidalgo 2022 en su forma presencial!
 
 Para más información sobre el programa del día, puedes consultarlo <a href="https://forocanadevihidalgo.com">aquí</a>.
