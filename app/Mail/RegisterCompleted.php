@@ -38,16 +38,14 @@ class RegisterCompleted extends Mailable
      */
     public function attachments()
     {
-        return [];
-        /*
+
         if ($this->type === 3)
             return [
-                Attachment::fromPath(asset('pdf/convocatoria_carrera.pdf'))
+                Attachment::fromPath(public_path('pdf/convocatoria_carrera.pdf'))
                 ->as('Convocatoria.pdf')
-                ->withMime('application/pdf'),
             ];
         else
-            return [ ];*/
+            return [ ];
     }
 
     /**
