@@ -2,7 +2,16 @@
 
     <div class="py-12">
         <div class="overflow-hidden sm:rounded-lg max-w mx-auto px-8">
-            <div class="ml-6 mr-6">
+            <div class="flex flex-col ml-6 mr-6 space-y-5">
+                <div class="flex flex-row space-x-5 sm:rounded-lg">
+                    <button
+                        id="emails"
+                        onclick="emails()"
+                        class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-4 rounded-full"
+                        style="min-width: 200px;">
+                        Reenviar correos de pago
+                    </button>
+                </div>
                 <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-gray-500 text-center">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -93,7 +102,7 @@
                                     @if ($row->payment_status !== 1)
                                     <button
                                         onclick="setPayment({{ $row->id }})"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-light py-1 px-2 text-xs rounded-full">
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-light py-1 px-4 text-xs rounded-full">
                                         Actualizar
                                     </button>
                                     @endif
@@ -153,7 +162,14 @@
                     title: '¡Hecho!',
                     text: result.message,
                 })
-            });
+            })
+            .fail(() => {
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: 'No se ha podido actualizar el pago, intente más tarde',
+                })
+            })
         }
 
         function validate(type, id) {
@@ -177,6 +193,43 @@
                     }
                     break;
             }
+        }
+
+        function emails() {
+            let button = document.getElementById('emails')
+
+            button.innerHTML = `<i class="fas fa-cog fa-spin"></i>`;
+            button.disabled = true;
+
+            fetch('{{ url("api/emails/forum") }}', {
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                method:'GET'
+            })
+            .then(response => response.json())
+            .then(result => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Hecho!',
+                    text: result.message,
+                    allowOutsideClick: false,
+                })
+
+                button.innerHTML = `Reenviar correos de pago`;
+                button.disabled = false;
+            })
+            .fail(() => {
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: 'No se ha podido enviar los correos, intente más tarde',
+                    allowOutsideClick: false,
+                })
+
+                button.innerHTML = `Reenviar correos de pago`;
+                button.disabled = false;
+            })
         }
     </script>
 </x-app-layout>

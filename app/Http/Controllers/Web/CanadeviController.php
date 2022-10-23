@@ -48,7 +48,8 @@ class CanadeviController extends Controller
             'birthdate' => $request->birthdate,
             'company' => $request->company,
             'position' => $request->position,
-            'mode' => $request->mode
+            'mode' => $request->mode,
+            'conekta_url' => ''
         ]);
 
         QrCode::format('png')
@@ -67,6 +68,10 @@ class CanadeviController extends Controller
         }
         else if ($row->mode == 1) {
             $conektaInfo = $this->doPaymentLink($row);
+
+            $row->conekta_url = $conektaInfo->url;
+            $row->save();
+
             Mail::to($row->email)->send(new RegisterCompleted(
                 'canadevi_' . $row->id,
                 asset('images/foto_canadevi.png'),

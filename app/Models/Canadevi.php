@@ -35,6 +35,7 @@ class Canadevi extends Model
         'mode',
         'payment_mode',
         'payment_status',
+        'conekta_url',
         'assistance'
     ];
 

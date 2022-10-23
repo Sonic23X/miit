@@ -36,6 +36,7 @@ class Race extends Model
         'event',
         'payment_mode',
         'payment_status',
+        'conekta_url',
         'assistance'
     ];
 

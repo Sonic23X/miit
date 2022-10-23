@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Mail\RegisterCompleted;
 use App\Mail\PaymentCompleted;
 use Illuminate\Support\Facades\Mail;
 use App\Models\{
     Canadevi,
     Race
 };
+use Carbon\Carbon;
+use Conekta\Checkout;
+use Conekta\Conekta;
 
 class AdminController extends Controller
 {
@@ -51,6 +55,63 @@ class AdminController extends Controller
         return response()->json(['message' => '¡Proceso completado con exito!'], 200);
     }
 
+    public function sendEmails(string $option)
+    {
+        switch($option) {
+            case 'forum':
+                $rows = Canadevi::where('payment_status', 0)->get();
+                $rows->map(function ($row) {
+                    if ($row->mode == 0) {
+                        Mail::to($row->email)->send(new RegisterCompleted(
+                            'canadevi_' . $row->id,
+                            asset('images/foto_canadevi.png'),
+                            2,
+                            '',
+                            $row->name
+                        ));
+                    } else if ($row->mode == 1) {
+
+                        if ($row->conekta_url == '') {
+                            $row->conekta_url = $this->doForumPaymentLink($row)->url;
+                            $row->save();
+                        }
+
+                        Mail::to($row->email)->send(new RegisterCompleted(
+                            'canadevi_' . $row->id,
+                            asset('images/foto_canadevi.png'),
+                            1,
+                            $row->conekta_url,
+                            $row->name
+                        ));
+                    }
+
+                    return $row;
+                });
+                break;
+            case 'race':
+                $rows = Race::where('payment_status', 0)->get();
+                $rows->map(function ($row) {
+
+                    if ($row->conekta_url == '') {
+                        $row->conekta_url = $this->doRacePaymentLink($row)->url;
+                        $row->save();
+                    }
+
+                    Mail::to($row->email)->send(new RegisterCompleted(
+                        'race_' . $row->id,
+                        asset('images/logo_carrera.png'),
+                        3,
+                        $row->conekta_url,
+                        $row->name
+                    ));
+
+                    return $row;
+                });
+                break;
+        }
+        return response()->json(['message' => '¡Correos enviados con exito!'], 200);
+    }
+
     public function payment(Request $conekta) {
         if ($conekta->type === "order.paid") {
             if ($conekta->data['object']['amount'] === 16000 || $conekta->data['object']['amount'] === 6000) {
@@ -86,5 +147,80 @@ class AdminController extends Controller
                 return response()->json([], 200);
             }
         }
+    }
+
+    public function doForumPaymentLink($user)
+    {
+        $productName = 'Acceso al foro';
+        $productCost = 70000;
+
+        $dateExpires = Carbon::now()->addDay(30);
+
+        Conekta::setApiKey(env('CONEKTA_PRIV_KEY'));
+
+        $validCheckout = [
+            'name' => "Foro Canadevi Hidalgo 2022",
+            'type' => "PaymentLink",
+            'recurrent' => false,
+            'expires_at' => $dateExpires->timestamp,
+            'allowed_payment_methods' => ["card"],
+            'needs_shipping_contact' => false,
+            'order_template' => [
+                'line_items' => [[
+                    'name' => $productName,
+                    'unit_price' => $productCost,
+                    'quantity' => 1
+                ]],
+                'currency' => "MXN",
+                'customer_info' => [
+                    'name' => $user->name . ' ' . $user->first_surname . ' ' . $user->second_surname,
+                    'email' => $user->email,
+                    'phone' => $user->telephone
+                ]
+            ]
+        ];
+
+        return Checkout::create($validCheckout);
+    }
+
+    public function doRacePaymentLink($user)
+    {
+        $productName = '';
+        $productCost = 0;
+        if ($user->event == 0) {
+            $productName = 'Acceso a evento - Carrera 7 KM';
+            $productCost = 16000;
+        } else {
+            $productName = 'Acceso a evento - Caminata 3 KM';
+            $productCost = 6000;
+        }
+
+        $dateExpires = Carbon::now()->addDay(30);
+
+        Conekta::setApiKey(env('CONEKTA_PRIV_KEY'));
+
+        $validCheckout = [
+            'name' => "Carrera Canadevi Hidalgo 2022",
+            'type' => "PaymentLink",
+            'recurrent' => false,
+            'expires_at' => $dateExpires->timestamp,
+            'allowed_payment_methods' => ["card"],
+            'needs_shipping_contact' => false,
+            'order_template' => [
+                'line_items' => [[
+                    'name' => $productName,
+                    'unit_price' => $productCost,
+                    'quantity' => 1
+                ]],
+                'currency' => "MXN",
+                'customer_info' => [
+                    'name' => $user->name . ' ' . $user->first_surname . ' ' . $user->second_surname,
+                    'email' => $user->email,
+                    'phone' => $user->telephone
+                ]
+            ]
+        ];
+
+        return Checkout::create($validCheckout);
     }
 }

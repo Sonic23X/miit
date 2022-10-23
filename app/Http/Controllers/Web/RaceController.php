@@ -53,6 +53,7 @@ class RaceController extends Controller
             'event' => $request->event,
             'state' => $request->state,
             'city' => $request->city,
+            'conekta_url' => ''
         ]);
 
         QrCode::format('png')
@@ -61,6 +62,9 @@ class RaceController extends Controller
             ->generate(url('canadevi/validacion/race_' . $row->hash), public_path('qrcodes/race_' . $row->id . '.png'));
 
         $conektaInfo = $this->doPaymentLink($row);
+
+        $row->conekta_url = $conektaInfo->url;
+        $row->save();
 
         Mail::to($row->email)->send(new RegisterCompleted(
             'race_' . $row->id,
