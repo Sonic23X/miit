@@ -43,12 +43,14 @@
                                     {{ $row->telephone }}
                                 </td>
                                 <td class="py-4 px-6 flex">
-                                    @if ($row->event === App\Models\Race::WALK)
-                                    Caminata 3 KM
-                                    @else
-                                    Carrera 7 KM
-                                    @endif
-                                    <a href="javascript:change('asd')" class="ml-3">
+                                    <div id="mode_{{ $row->id }}">
+                                        @if ($row->event === App\Models\Race::WALK)
+                                        Caminata de 3 KM
+                                        @else
+                                        Carrera de 7 KM
+                                        @endif
+                                    </div>
+                                    <a href="javascript:change({{ $row->id }})" class="ml-3">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-4">
                                             <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.8 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
                                         </svg>
@@ -119,7 +121,7 @@
                 body: JSON.stringify({ mode: selection, user: id })
             })
             .then(response => response.json())
-            .then(function(result){
+            .then(result => {
                 let card = document.getElementById(`option_{{ App\Models\Canadevi::MODE_CARD }}_${id}`)
                 card.disabled = true
                 card.classList.remove('bg-gray-100')
@@ -136,6 +138,7 @@
                     icon: 'success',
                     title: '¡Hecho!',
                     text: result.message,
+                    allowOutsideClick: false,
                 })
 
             });
@@ -145,42 +148,60 @@
             switch (type) {
                 case {{ App\Models\Race::MODE_CARD }}:
                     if (document.getElementById(`option_${type}_${id}`).checked) {
-                        document.getElementById(`option_{{{ App\Models\Race::MODE_TRANS }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Race::MODE_FIS }}}_${id}`).checked = false
-                    }
-                    break;
-                case {{ App\Models\Race::MODE_TRANS }}:
-                    if (document.getElementById(`option_${type}_${id}`).checked) {
-                        document.getElementById(`option_{{{ App\Models\Race::MODE_CARD }}}_${id}`).checked = false
                         document.getElementById(`option_{{{ App\Models\Race::MODE_FIS }}}_${id}`).checked = false
                     }
                     break;
                 case {{ App\Models\Race::MODE_FIS }}:
                     if (document.getElementById(`option_${type}_${id}`).checked) {
                         document.getElementById(`option_{{{ App\Models\Race::MODE_CARD }}}_${id}`).checked = false
-                        document.getElementById(`option_{{{ App\Models\Race::MODE_TRANS }}}_${id}`).checked = false
                     }
                     break;
             }
         }
 
-        function change(id, value) {
-            const { value: fruit } = await Swal.fire({
+        async function change(id) {
+            Swal.fire({
                 title: 'Modalidad',
                 input: 'select',
                 inputOptions: {
-                    0: 
+                    '0': 'Carrera de 7 KM',
+                    '1': 'Caminata de 3 KM'
                 },
-                inputPlaceholder: 'Select a fruit',
+                inputPlaceholder: 'Selecciona un modo',
                 showCancelButton: true,
                 inputValidator: (value) => {
                     return new Promise((resolve) => {
-                    if (value === 'oranges') {
-                        resolve()
-                    } else {
-                        resolve('You need to select oranges :)')
-                    }
+                        if (value === '') {
+                            resolve('Seleccione un modo de evento')
+                        } else {
+                            resolve()
+                        }
                     })
+                }
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`{{ url("api/admin/race/change/") }}/${id}`, {
+                        headers:{
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        method:'POST',
+                        body: JSON.stringify({ mode: result.value })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+
+                        let mode = document.getElementById(`mode_${id}`)
+                        mode.innerHTML = result.mode;
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Hecho!',
+                            text: result.message,
+                            allowOutsideClick: false,
+                        })
+                    });
                 }
             })
         }

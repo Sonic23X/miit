@@ -149,6 +149,24 @@ class AdminController extends Controller
         }
     }
 
+    public function changeRace(Request $request, $id)
+    {
+        $row = Race::findOrFail($id);
+        $row->event = $request->mode;
+        $row->save();
+
+        $mode = '';
+        if ($request->mode == '0')
+            $mode = 'Carrera de 7 KM';
+        else
+            $mode = 'Caminata de 3 KM';
+
+        return response()->json([
+            'message' => '¡Cambio realizado con exito!',
+            'mode' => $mode
+        ], 200);
+    }
+
     public function doForumPaymentLink($user)
     {
         $productName = 'Acceso al foro';

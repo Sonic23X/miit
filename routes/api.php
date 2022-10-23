@@ -20,12 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/emails/{option}', [AdminController::class, 'sendEmails']);
-
 Route::post('/webhook', [RegistrationController::class, 'register']);
 
 Route::post('admin/race', [AdminController::class, 'setPaymentRace']);
 Route::post('admin/forum', [AdminController::class, 'setPaymentForum']);
 
 Route::post('admin/payment', [AdminController::class, 'payment']);
+Route::get('/emails/{option}', [AdminController::class, 'sendEmails']);
+Route::post('/admin/race/change/{id}', [AdminController::class, 'changeRace']);
 
