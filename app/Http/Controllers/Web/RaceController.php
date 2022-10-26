@@ -90,8 +90,8 @@ class RaceController extends Controller
     {
         $person = Race::where('hash', $hash)->firstOrFail();
 
-        $person->assistance = 1;
-        $person->save();
+        /*$person->assistance = 1;
+        $person->save();*/
 
         $data = [
             'person' => $person
