@@ -88,7 +88,7 @@ class RaceController extends Controller
 
     public function confirm(string $qr): View
     {
-        $hash = explode('_', $qr)[0];
+        $hash = explode('_', $qr)[1];
         $person = Race::where('hash', $hash)->firstOrFail();
 
         /*$person->assistance = 1;
