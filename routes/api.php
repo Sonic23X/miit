@@ -28,4 +28,5 @@ Route::post('admin/forum', [AdminController::class, 'setPaymentForum']);
 Route::post('admin/payment', [AdminController::class, 'payment']);
 Route::get('/emails/{option}', [AdminController::class, 'sendEmails']);
 Route::post('/admin/race/change/{id}', [AdminController::class, 'changeRace']);
+Route::post('/admin/forum/change/{id}', [AdminController::class, 'changeForum']);
 

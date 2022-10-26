@@ -167,6 +167,48 @@ class AdminController extends Controller
         ], 200);
     }
 
+    public function changeForum(Request $request, $id)
+    {
+        $row = Canadevi::findOrFail($id);
+        $row->mode = $request->mode;
+        $row->save();
+
+        $mode = '';
+        if ($request->mode == '0')
+            $mode = 'Virtual';
+        else
+            $mode = 'Presencial';
+
+        /*if ($row->mode == 0) {
+            Mail::to($row->email)->send(new RegisterCompleted(
+                'canadevi_' . $row->id,
+                asset('images/foto_canadevi.png'),
+                2,
+                '',
+                $row->name
+            ));
+        } else if ($row->mode == 1) {
+
+            if ($row->conekta_url == '') {
+                $row->conekta_url = $this->doForumPaymentLink($row)->url;
+                $row->save();
+            }
+
+            Mail::to($row->email)->send(new RegisterCompleted(
+                'canadevi_' . $row->id,
+                asset('images/foto_canadevi.png'),
+                1,
+                $row->conekta_url,
+                $row->name
+            ));
+        }*/
+
+        return response()->json([
+            'message' => '¡Cambio realizado con exito!',
+            'mode' => $mode
+        ], 200);
+    }
+
     public function doForumPaymentLink($user)
     {
         $productName = 'Acceso al foro';
