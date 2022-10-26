@@ -86,18 +86,20 @@ class RaceController extends Controller
         return view('pages.carrera.thanks', $data);
     }
 
-    public function confirm(string $hash): View
+    public function confirm(string $hash)
     {
-        $person = Race::where('hash', $hash)->firstOrFail();
+        //$person = Race::where('hash', $hash)->firstOrFail();
+
+        echo $hash;
 
         /*$person->assistance = 1;
-        $person->save();*/
+        $person->save();
 
         $data = [
             'person' => $person
         ];
 
-        return view('pages.carrera.validate', $data);
+        return view('pages.carrera.validate', $data);*/
     }
 
     public function getCities($state_id)
