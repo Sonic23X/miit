@@ -38,14 +38,14 @@ Route::domain('forocanadevihidalgo.' . env('APP_URL'))->group(function () {
     Route::get('/', [CanadeviController::class, 'create']);
     Route::get('/gracias/{hash}', [CanadeviController::class, 'thanks'])->name('thanks_canadevi');
     Route::post('/formulario', [CanadeviController::class, 'store'])->name('form_store_canadevi');
-    Route::get('/validacion/{hash}', [CanadeviController::class, 'confirm']);
+    Route::get('/canadevi/validacion/{hash}', [CanadeviController::class, 'confirm']);
 });
 
 Route::domain('carreracanadevi.' . env('APP_URL'))->group(function () {
     Route::get('/', [RaceController::class, 'create']);
     Route::get('/gracias/{hash}', [RaceController::class, 'thanks'])->name('thanks_race');
     Route::post('/formulario', [RaceController::class, 'store'])->name('form_store_race');
-    Route::get('/validacion/{hash}', [RaceController::class, 'confirm']);
+    Route::get('/canadevi/validacion/{hash}', [RaceController::class, 'confirm']);
     Route::get('/cities/{id}', [RaceController::class, 'getCities']);
 });
 
@@ -83,6 +83,11 @@ Route::get('/gracias/{hash}', [DomController::class, 'thanks'])->name('thanks_do
 Route::post('/formulario', [DomController::class, 'store'])->name('form_store_dom');
 Route::get('/validacion/{hash}', [DomController::class, 'confirm']);
 
+Route::get('/formulario', [RaceController::class, 'create']);
+Route::get('/gracias/{hash}', [RaceController::class, 'thanks'])->name('thanks_race');
+Route::post('/formulario', [RaceController::class, 'store'])->name('form_store_race');
+Route::get('/validacion/{hash}', [RaceController::class, 'confirm']);
+Route::get('/cities/{id}', [RaceController::class, 'getCities']);
 
 Route::middleware(['auth'])->group(function() {
     Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
