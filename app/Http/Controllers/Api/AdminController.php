@@ -179,7 +179,7 @@ class AdminController extends Controller
         else
             $mode = 'Presencial';
 
-        /*if ($row->mode == 0) {
+        if ($row->mode == 0) {
             Mail::to($row->email)->send(new RegisterCompleted(
                 'canadevi_' . $row->id,
                 asset('images/foto_canadevi.png'),
@@ -201,7 +201,7 @@ class AdminController extends Controller
                 $row->conekta_url,
                 $row->name
             ));
-        }*/
+        }
 
         return response()->json([
             'message' => '¡Cambio realizado con exito!',
