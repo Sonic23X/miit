@@ -73,7 +73,10 @@ Route::domain('access.' . env('APP_URL'))->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     Route::middleware(['auth'])->group(function () {
-        Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
+        //Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', function () {
+            return redirect('/forum');
+        });
         Route::get('forum', [AdminController::class, 'indexForum'])->name('forum');
         Route::get('race', [AdminController::class, 'indexRace'])->name('race');
 
