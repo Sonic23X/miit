@@ -18,6 +18,15 @@ use Conekta\Conekta;
 
 class RaceController extends Controller
 {
+    public function login()
+    {
+        return view('pages.canadevi.login');
+    }
+
+    public function dashboard()
+    {
+        echo "Permiso para escanear QR's concedido";
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -51,6 +51,10 @@ Route::domain('carreracanadevi.' . env('APP_URL'))->group(function () {
     Route::post('/formulario', [RaceController::class, 'store'])->name('form_store_race');
     Route::get('/canadevi/validacion/{hash}', [RaceController::class, 'confirm']);
     Route::get('/cities/{id}', [RaceController::class, 'getCities']);
+
+    Route::get('login', [RaceController::class, 'login'])->name('login');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::get('dashboard', [RaceController::class, 'dashboard'])->name('dashboard');
 });
 
 Route::domain('dom.' . env('APP_URL'))->group(function () {
