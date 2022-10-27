@@ -39,6 +39,10 @@ Route::domain('forocanadevihidalgo.' . env('APP_URL'))->group(function () {
     Route::get('/gracias/{hash}', [CanadeviController::class, 'thanks'])->name('thanks_canadevi');
     Route::post('/formulario', [CanadeviController::class, 'store'])->name('form_store_canadevi');
     Route::get('/canadevi/validacion/{hash}', [CanadeviController::class, 'confirm']);
+
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::get('dashboard', [CanadeviController::class, 'dashboard'])->name('dashboard');
 });
 
 Route::domain('carreracanadevi.' . env('APP_URL'))->group(function () {

@@ -105,6 +105,11 @@ class CanadeviController extends Controller
         return view('pages.canadevi.validate', $data);
     }
 
+    public function dashboard()
+    {
+        echo "Permiso para escanear QR's concedido";
+    }
+
     public function doPaymentLink($user)
     {
         $productName = 'Acceso al foro';
