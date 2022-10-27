@@ -40,7 +40,7 @@ Route::domain('forocanadevihidalgo.' . env('APP_URL'))->group(function () {
     Route::post('/formulario', [CanadeviController::class, 'store'])->name('form_store_canadevi');
     Route::get('/canadevi/validacion/{hash}', [CanadeviController::class, 'confirm']);
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::get('login', [CanadeviController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
     Route::get('dashboard', [CanadeviController::class, 'dashboard'])->name('dashboard');
 });
