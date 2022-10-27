@@ -30,3 +30,5 @@ Route::get('/emails/{option}', [AdminController::class, 'sendEmails']);
 Route::post('/admin/race/change/{id}', [AdminController::class, 'changeRace']);
 Route::post('/admin/forum/change/{id}', [AdminController::class, 'changeForum']);
 
+Route::get('/admin/race/confirm/{id}', [AdminController::class, 'confirmRaceAssistence']);
+Route::get('/admin/forum/confirm/{id}', [AdminController::class, 'confirmForumAssistence']);

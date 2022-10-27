@@ -93,12 +93,10 @@ class CanadeviController extends Controller
         return view('pages.canadevi.thanks', $data);
     }
 
-    public function confirm(string $hash): View
+    public function confirm(string $qr): View
     {
+        $hash = explode('_', $qr)[1];
         $person = Canadevi::where('hash', $hash)->firstOrFail();
-
-        $person->assistance = 1;
-        $person->save();
 
         $data = [
             'person' => $person

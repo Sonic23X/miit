@@ -209,6 +209,26 @@ class AdminController extends Controller
         ], 200);
     }
 
+    public function confirmRaceAssistence($id)
+    {
+        $person = Race::findOrFail($id);
+
+        $person->assistance = 1;
+        $person->save();
+
+        return response()->json(['message' => 'Asistencia confirmada', 'status' => 200], 200);
+    }
+
+    public function confirmForumAssistence($id)
+    {
+        $person = Canadevi::findOrFail($id);
+
+        $person->assistance = 1;
+        $person->save();
+
+        return response()->json(['message' => 'Asistencia confirmada', 'status' => 200], 200);
+    }
+
     public function doForumPaymentLink($user)
     {
         $productName = 'Acceso al foro';

@@ -91,9 +91,6 @@ class RaceController extends Controller
         $hash = explode('_', $qr)[1];
         $person = Race::where('hash', $hash)->firstOrFail();
 
-        /*$person->assistance = 1;
-        $person->save();*/
-
         $data = [
             'person' => $person
         ];
