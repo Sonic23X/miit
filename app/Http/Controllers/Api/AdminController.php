@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NoPaymentStatus;
 use Illuminate\Http\Request;
 use App\Mail\RegisterCompleted;
 use App\Mail\PaymentCompleted;
@@ -227,6 +228,27 @@ class AdminController extends Controller
         $person->save();
 
         return response()->json(['message' => 'Asistencia confirmada', 'status' => 200], 200);
+    }
+
+    public function sendNoPaymentEmails()
+    {
+        $persons = Race::where('payment_status', 0)->get();
+
+        foreach ($persons as $person) {
+
+            if($person->conekta_url == ''){
+                $person->conekta_url = $this->doForumPaymentLink($person)->url;
+                $person->save();
+            }
+
+            Mail::to($person->email)->send(new NoPaymentStatus(
+                asset('images/logo_carrera.png'),
+                $person->name,
+                $person->conekta_url
+            ));
+        }
+
+        return response()->json(['message' => '¡Envio de emails terminado!', 'status' => 200], 200);
     }
 
     public function doForumPaymentLink($user)

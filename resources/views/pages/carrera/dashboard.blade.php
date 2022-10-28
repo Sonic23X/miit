@@ -11,6 +11,13 @@
                         style="min-width: 200px;">
                         Reenviar correos de pago
                     </button>
+                    <button
+                        id="emailsNoPay"
+                        onclick="emailsNoPay()"
+                        class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-4 rounded-full"
+                        style="min-width: 240px;">
+                        Enviar recordatorio de pago
+                    </button>
                 </div>
                 <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-gray-500 text-center">
@@ -248,6 +255,43 @@
                 })
 
                 button.innerHTML = `Reenviar correos de pago`;
+                button.disabled = false;
+            })
+        }
+
+        function emailsNoPay() {
+            let button = document.getElementById('emailsNoPay')
+
+            button.innerHTML = `<i class="fas fa-cog fa-spin"></i>`;
+            button.disabled = true;
+
+            fetch('{{ url("api/emails/race/nopayment") }}', {
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                method:'GET'
+            })
+            .then(response => response.json())
+            .then(result => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Hecho!',
+                    text: result.message,
+                    allowOutsideClick: false,
+                })
+
+                button.innerHTML = `Enviar recordatorio de pago`;
+                button.disabled = false;
+            })
+            .catch(() => {
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: 'No se ha podido enviar los correos, intente más tarde',
+                    allowOutsideClick: false,
+                })
+
+                button.innerHTML = `Enviar recordatorio de pago`;
                 button.disabled = false;
             })
         }
