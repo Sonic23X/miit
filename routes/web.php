@@ -82,6 +82,7 @@ Route::domain('access.' . env('APP_URL'))->group(function () {
             return redirect('/forum');
         });
         Route::get('forum', [AdminController::class, 'indexForum'])->name('forum');
+        Route::get('forum/excel', [AdminController::class, 'downloadForum'])->name('downloadForum');
         Route::get('race', [AdminController::class, 'indexRace'])->name('race');
 
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -103,6 +104,7 @@ Route::get('/cities/{id}', [RaceController::class, 'getCities']);
 Route::middleware(['auth'])->group(function() {
     Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::get('forum', [AdminController::class, 'indexForum'])->name('forum');
+    Route::get('forum/excel', [AdminController::class, 'downloadForum'])->name('downloadForum');
     Route::get('race', [AdminController::class, 'indexRace'])->name('race');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

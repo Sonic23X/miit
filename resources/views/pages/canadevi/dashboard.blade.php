@@ -11,6 +11,11 @@
                         style="min-width: 200px;">
                         Reenviar correos de pago
                     </button>
+                    <a
+                        href="{{ route('downloadForum') }}"
+                        class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-4 rounded-full">
+                        Descargar lista
+                    </a>
                 </div>
                 <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-gray-500 text-center">

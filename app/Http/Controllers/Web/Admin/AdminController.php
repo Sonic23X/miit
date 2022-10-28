@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Exports\CanadeviExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\{
     Canadevi,
     Race,
@@ -42,5 +44,10 @@ class AdminController extends Controller
     public function indexForum(): View
     {
         return view('pages.canadevi.dashboard', ['registration' => Canadevi::query()->paginate(10)]);
+    }
+
+    public function downloadForum()
+    {
+        return Excel::download(new CanadeviExport, 'forum.xlsx');
     }
 }
