@@ -84,6 +84,7 @@ Route::domain('access.' . env('APP_URL'))->group(function () {
         Route::get('forum', [AdminController::class, 'indexForum'])->name('forum');
         Route::get('forum/excel', [AdminController::class, 'downloadForum'])->name('downloadForum');
         Route::get('race', [AdminController::class, 'indexRace'])->name('race');
+        Route::get('race/excel', [AdminController::class, 'downloadRace'])->name('downloadRace');
 
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     });

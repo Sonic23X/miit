@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Exports\CanadeviExport;
+use App\Exports\RaceExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\{
     Canadevi,
@@ -49,5 +50,10 @@ class AdminController extends Controller
     public function downloadForum()
     {
         return Excel::download(new CanadeviExport, 'forum.xlsx');
+    }
+
+    public function downloadRace()
+    {
+        return Excel::download(new RaceExport, 'race.xlsx');
     }
 }
