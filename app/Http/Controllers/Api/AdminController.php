@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ChangeDayGetKit;
 use App\Mail\NoPaymentStatus;
 use Illuminate\Http\Request;
 use App\Mail\RegisterCompleted;
@@ -245,6 +246,21 @@ class AdminController extends Controller
                 asset('images/logo_carrera.png'),
                 $person->name,
                 $person->conekta_url
+            ));
+        }
+
+        return response()->json(['message' => '¡Envio de emails terminado!', 'status' => 200], 200);
+    }
+
+    public function sendChangeDayEmails()
+    {
+        $persons = Race::where('payment_status', 1)->get();
+
+        foreach ($persons as $person) {
+
+            Mail::to($person->email)->send(new ChangeDayGetKit(
+                asset('images/logo_carrera.png'),
+                $person->name
             ));
         }
 

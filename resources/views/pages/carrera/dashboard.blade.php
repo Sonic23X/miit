@@ -18,6 +18,13 @@
                         style="min-width: 240px;">
                         Enviar recordatorio de pago
                     </button>
+                    <button
+                        id="emailsChangeDay"
+                        onclick="emailsChangeDay()"
+                        class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-4 rounded-full"
+                        style="min-width: 240px;">
+                        Enviar cambio de recolección
+                    </button>
                     <a
                         href="{{ route('downloadRace') }}"
                         class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-4 rounded-full">
@@ -297,6 +304,43 @@
                 })
 
                 button.innerHTML = `Enviar recordatorio de pago`;
+                button.disabled = false;
+            })
+        }
+
+        function emailsChangeDay() {
+            let button = document.getElementById('emailsChangeDay')
+
+            button.innerHTML = `<i class="fas fa-cog fa-spin"></i>`;
+            button.disabled = true;
+
+            fetch('{{ url("api/admin/race/day") }}', {
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                method:'GET'
+            })
+            .then(response => response.json())
+            .then(result => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Hecho!',
+                    text: result.message,
+                    allowOutsideClick: false,
+                })
+
+                button.innerHTML = `Enviar cambio de recolección`;
+                button.disabled = false;
+            })
+            .catch(() => {
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: 'Enviar cambio de recolección',
+                    allowOutsideClick: false,
+                })
+
+                button.innerHTML = `Enviar cambio de recolección`;
                 button.disabled = false;
             })
         }

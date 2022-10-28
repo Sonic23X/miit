@@ -29,6 +29,7 @@ Route::post('admin/payment', [AdminController::class, 'payment']);
 Route::get('/emails/{option}', [AdminController::class, 'sendEmails']);
 Route::get('/emails/race/nopayment', [AdminController::class, 'sendNoPaymentEmails']);
 Route::post('/admin/race/change/{id}', [AdminController::class, 'changeRace']);
+Route::get('/admin/race/day', [AdminController::class, 'sendChangeDayEmails']);
 Route::post('/admin/forum/change/{id}', [AdminController::class, 'changeForum']);
 
 Route::get('/admin/race/confirm/{id}', [AdminController::class, 'confirmRaceAssistence']);
