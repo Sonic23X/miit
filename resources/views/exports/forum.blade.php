@@ -27,7 +27,7 @@
                 @endif
             </td>
             <td>
-                @if ($person->payment_mode == App\Models\Canadevi::MODE_CARD)
+                @if ($person->payment_mode == App\Models\Canadevi::MODE_CARD || $person->payment_mode == App\Models\Canadevi::MODE_FIS)
                 Pago
                 @elseif ($person->payment_mode == App\Models\Canadevi::MODE_INV)
                 Invitado
