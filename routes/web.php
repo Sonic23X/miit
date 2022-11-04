@@ -58,6 +58,14 @@ Route::domain('carreracanadevi.' . env('APP_URL'))->group(function () {
     Route::get('dashboard', [RaceController::class, 'dashboard'])->name('dashboard');
 });
 
+Route::domain('ampi.' . env('APP_URL'))->group(function () {
+    Route::get('/', [AmpiController::class, 'create']);
+    Route::get('/gracias/{hash}', [AmpiController::class, 'thanks'])->name('thanks_ampi');
+    Route::post('/formulario', [AmpiController::class, 'store'])->name('form_store_ampi');
+    Route::get('/validacion/{hash}', [AmpiController::class, 'confirm']);
+    Route::get('/cupon/{cupon}', [AmpiController::class, 'validateCoupon']);
+});
+
 Route::domain('dom.' . env('APP_URL'))->group(function () {
     Route::get('/', [DomController::class, 'create']);
     Route::get('/gracias/{hash}', [DomController::class, 'thanks'])->name('thanks_dom');
@@ -90,13 +98,6 @@ Route::domain('access.' . env('APP_URL'))->group(function () {
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
 });
-
-
-Route::get('/formulario', [AmpiController::class, 'create']);
-Route::get('/gracias/{hash}', [AmpiController::class, 'thanks'])->name('thanks_ampi');
-Route::post('/formulario', [AmpiController::class, 'store'])->name('form_store_ampi');
-Route::get('/validacion/{hash}', [AmpiController::class, 'confirm']);
-Route::get('/cupon/{cupon}', [AmpiController::class, 'validateCoupon']);
 
 Route::middleware(['auth'])->group(function() {
     //Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
