@@ -96,6 +96,7 @@ Route::get('/formulario', [AmpiController::class, 'create']);
 Route::get('/gracias/{hash}', [AmpiController::class, 'thanks'])->name('thanks_ampi');
 Route::post('/formulario', [AmpiController::class, 'store'])->name('form_store_ampi');
 Route::get('/validacion/{hash}', [AmpiController::class, 'confirm']);
+Route::get('/cupon/{cupon}', [AmpiController::class, 'validateCoupon']);
 
 Route::middleware(['auth'])->group(function() {
     //Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');

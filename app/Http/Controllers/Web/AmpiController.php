@@ -16,10 +16,11 @@ use App\Models\Coupon;
 use Carbon\Carbon;
 use Conekta\Checkout;
 use Conekta\Conekta;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AmpiController extends Controller
 {
-    public function login()
+    public function login(): View
     {
         return view('pages.ampi.login');
     }
@@ -100,6 +101,19 @@ class AmpiController extends Controller
     public function dashboard()
     {
         echo "Permiso para escanear QR's concedido";
+    }
+
+    public function validateCoupon(string $coupon): JsonResponse
+    {
+        $cupon = Coupon::where('coupon', $coupon)->first();
+
+        if ($cupon == null)
+            return response()->json(['message' => 'Cupón no válido'], 404);
+
+        if ($cupon->available == 1)
+            return response()->json(['message' => 'Cupón ya usado'], 400);
+
+        return response()->json(['message' => 'Cupón disponible'], 200);
     }
 
     public function doPaymentLink($user)
