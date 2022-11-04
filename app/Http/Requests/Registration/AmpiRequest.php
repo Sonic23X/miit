@@ -17,7 +17,7 @@ class AmpiRequest extends FormRequest
             'name' => ['string', 'required'],
             'first_surname' => ['string', 'required'],
             'second_surname' => ['string', 'required'],
-            'telephone' => ['numeric', 'unique:canadevis', 'required', 'min:10', 'max:10'],
+            'telephone' => ['numeric', 'unique:canadevis', 'required', 'min:10'],
             'email' => ['email', 'unique:ampis', 'required'],
             'real_estate' => ['string', 'required'],
             'partner' => ['numeric', 'required'],
