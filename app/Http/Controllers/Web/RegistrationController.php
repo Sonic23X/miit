@@ -44,7 +44,7 @@ class RegistrationController extends Controller
             'civil_status' => $request->civil_status,
             'have_children' => $request->have_children,
             'spouse_status' => $request->spouse_status,
-            'spouse_credit' => $spouse_credit
+            'spouse_credit' => $spouse_credit,
         ]);
 
         QrCode::format('png')

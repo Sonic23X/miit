@@ -7,7 +7,8 @@ use App\Http\Controllers\Web\{
     CanadeviController,
     RaceController,
     DomController,
-    Admin\AdminController
+    Admin\AdminController,
+    AmpiController
 };
 
 
@@ -90,20 +91,17 @@ Route::domain('access.' . env('APP_URL'))->group(function () {
     });
 });
 
-/*
-Route::get('/formulario', [DomController::class, 'create']);
-Route::get('/gracias/{hash}', [DomController::class, 'thanks'])->name('thanks_dom');
-Route::post('/formulario', [DomController::class, 'store'])->name('form_store_dom');
-Route::get('/validacion/{hash}', [DomController::class, 'confirm']);
 
-Route::get('/formulario', [RaceController::class, 'create']);
-Route::get('/gracias/{hash}', [RaceController::class, 'thanks'])->name('thanks_race');
-Route::post('/formulario', [RaceController::class, 'store'])->name('form_store_race');
-Route::get('/validacion/{hash}', [RaceController::class, 'confirm']);
-Route::get('/cities/{id}', [RaceController::class, 'getCities']);
+Route::get('/formulario', [AmpiController::class, 'create']);
+Route::get('/gracias/{hash}', [AmpiController::class, 'thanks'])->name('thanks_ampi');
+Route::post('/formulario', [AmpiController::class, 'store'])->name('form_store_ampi');
+Route::get('/validacion/{hash}', [AmpiController::class, 'confirm']);
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
+    //Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', function () {
+        return redirect('/forum');
+    });
     Route::get('forum', [AdminController::class, 'indexForum'])->name('forum');
     Route::get('forum/excel', [AdminController::class, 'downloadForum'])->name('downloadForum');
     Route::get('race', [AdminController::class, 'indexRace'])->name('race');
@@ -115,4 +113,3 @@ Route::get('register', [RegisteredUserController::class, 'create'])->name('regis
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
-*/
