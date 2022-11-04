@@ -91,7 +91,7 @@
             </div>
             <div class="hidden flex-col w-full mt-6 md:mt-0" id="regionDiv">
                 <label for="region" class="block mb-2 text-sm font-medium text-gray-900">Región</label>
-                <input type="text" id="region" name="region" required value="{{ old('region') ?? ''}}"
+                <input type="text" id="region" name="region" value="{{ old('region') ?? ''}}"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 @error('region')
                 <p class="text-xs font-normal text-red-600 mt-1">
