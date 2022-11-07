@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->string('coupon');
+            $table->string('coupon', 10);
+            $table->integer('type');
             $table->tinyInteger('available');
             $table->timestamps();
         });

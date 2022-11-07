@@ -108,12 +108,12 @@ class AmpiController extends Controller
         $cupon = Coupon::where('coupon', $coupon)->first();
 
         if ($cupon == null)
-            return response()->json(['message' => 'Cupón no válido'], 404);
+            return response()->json(['message' => 'Cupón no válido', 'status' => 404], 404);
 
-        if ($cupon->available == 1)
-            return response()->json(['message' => 'Cupón ya usado'], 400);
+        if ($cupon->available != 1)
+            return response()->json(['message' => 'Cupón ya usado', 'status' => 400], 400);
 
-        return response()->json(['message' => 'Cupón disponible'], 200);
+        return response()->json(['message' => 'Cupón disponible', 'status' => 200], 200);
     }
 
     public function doPaymentLink($user)

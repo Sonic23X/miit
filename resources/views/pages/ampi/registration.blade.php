@@ -100,15 +100,15 @@
                 @enderror
             </div>
         </div>
-        <div class="mb-6 hidden">
+        <div class="mb-6">
             <label for="coupon" class="block mb-2 text-sm font-medium text-gray-900">Cupón</label>
-            <input type="text" id="coupon" name="coupon"
+            <input type="text" id="coupon" name="coupon" onkeyup="validateCoupon()" maxlength="10"
                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-            <p class="text-xs font-normal text-red-600 mt-1" id="couponAlert"></p>
+            <p class="text-xs font-normal mt-1" id="couponAlert"></p>
         </div>
         <button type="submit" id="nextStep"
             class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2">
-            Registrarme - <span id="costo">$950.00</span>
+            Registrarme - <span id="cost">$950.00</span>
         </button>
     </form>
 
@@ -127,13 +127,39 @@
                 }
             }
 
-            /*function validateCoupon() {
+            function validateCoupon() {
                 var coupon = document.getElementById('coupon')
+                var couponAlert = document.getElementById('couponAlert')
+                var cost = document.getElementById('cost')
 
-                if (condition) {
+                if (coupon.value.length == 10) {
+                    fetch(`{{ url("cupon") }}/${coupon.value}`, {
+                        headers:{
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        method:'GET'
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if(result.status == 200) {
+                            couponAlert.classList.remove('text-red-600')
+                            couponAlert.classList.add('text-green-600')
 
+                            cost.innerHTML = '$750.00'
+                        } else {
+                            couponAlert.classList.remove('text-green-600')
+                            couponAlert.classList.add('text-red-600')
+
+                            cost.innerHTML = '$950.00'
+                        }
+                        couponAlert.innerHTML = `${result.message}`
+                    });
+                } else {
+                    cost.innerHTML = '$950.00'
+                    couponAlert.innerHTML = ``
                 }
-            }*/
+            }
         </script>
     @endslot
 
