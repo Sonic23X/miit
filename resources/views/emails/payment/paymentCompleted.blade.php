@@ -24,6 +24,16 @@ Para recoger tu KIT será el Viernes 28 de Octubre de 2022 en las oficinas de Ca
 Anexo a este correo encontrarás la carta de Exclusión, la cual deberás de entregar llenada y firmada al momento de la entrega de tu KIT.
 
 @endif
+@if ($type == 3)
+<div style="display: flex; justify-content:center;">
+    <img src="{{ $image }}" alt="logo_ampi_2022"
+        style="height: 6rem; margin-bottom: 1.5rem;">
+</div>
+
+Hola {{ $nombre }}. ¡Gracias por tu pago!
+
+A continuación te mandamos el código QR que necesitarás presentar para tu acceso al evento.  Recuerda llegar a tiempo, ya que el evento empieza a las 9:00 am.
+@endif
 
 <div style="display: flex; justify-content:center;">
     <img src="{{ asset('qrcodes/'. $registration .'.png') }}" alt="qr_code"

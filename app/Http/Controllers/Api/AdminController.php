@@ -11,7 +11,8 @@ use App\Mail\PaymentCompleted;
 use Illuminate\Support\Facades\Mail;
 use App\Models\{
     Canadevi,
-    Race
+    Race,
+    Ampi
 };
 use Carbon\Carbon;
 use Conekta\Checkout;
@@ -146,6 +147,22 @@ class AdminController extends Controller
                     $user->name
                 ));
 
+                return response()->json([], 200);
+            }
+            else if ($conekta->data['object']['amount'] === 95000 || $conekta->data['object']['amount'] === 75000) {
+                $user = Ampi::where('email', $conekta->data['object']['customer_info']['email'])->first();
+
+                $user->payment_mode = Ampi::MODE_CARD;
+                $user->payment_status = 1;
+                $user->save();
+
+                Mail::to($user->email)->send(new PaymentCompleted(
+                    'ampi_' . $user->id,
+                    asset('images/logo_ampi.jpg'),
+                    3,
+                    $user->name
+                ));
+                
                 return response()->json([], 200);
             }
         }

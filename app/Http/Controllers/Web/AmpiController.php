@@ -77,7 +77,7 @@ class AmpiController extends Controller
         Mail::to($row->email)->send(new RegisterCompleted(
             'ampi_' . $row->id,
             asset('images/logo_ampi.jpg'),
-            1,
+            4,
             $conektaInfo->url,
             $row->name
         ));

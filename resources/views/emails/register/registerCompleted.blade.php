@@ -61,4 +61,21 @@ Una vez confirmado el pago recibirás un correo electrónico con un QR el cual d
 ¡Gracias!
 
 @endif
+@if ($type == 4)
+<div style="display: flex; justify-content: center;">
+    <img src="{{ $image }}" alt="logo_ampi_2022"
+        style="height: 6rem; margin-bottom: 1.5rem;">
+</div>
+
+<b>Hola {{ $nombre }} ¡Gracias por haberte registrado al 10° Foro AMPI Pachuca - Convergencia Inmobiliaria!</b>
+
+El evento se llevará a cabo el 11 de Noviembre de 2022 en el salón Veravia de la ciudad de Pachuca, Hidalgo a partir de las 9 am.
+
+Para confirmar tu asistencia será necesario realizar el pago en la siguiente <a href="{{ $urlPayment }}">liga</a>.
+
+Una vez que se haya confirmado el pago, recibirás otro correo con la confirmación del pago y tu QR para el acceso al evento.
+
+¡Gracias!
+
+@endif
 @endcomponent

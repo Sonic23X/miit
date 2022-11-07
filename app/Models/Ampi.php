@@ -9,6 +9,12 @@ class Ampi extends Model
 {
     use HasFactory;
 
+    public const MODE_TRANS = 1;
+    public const MODE_CARD = 2;
+    public const MODE_FIS = 3;
+    public const MODE_INV = 4;
+    public const MODE_ESP_INV = 5;
+
     /**
      * The attributes that are mass assignable.
      *
