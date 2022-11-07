@@ -64,7 +64,7 @@ Route::domain('ampi.' . env('APP_URL'))->group(function () {
     Route::post('/formulario', [AmpiController::class, 'store'])->name('form_store_ampi');
     Route::get('/validacion/{hash}', [AmpiController::class, 'confirm']);
     Route::get('/cupon/{cupon}', [AmpiController::class, 'validateCoupon']);
-    Route::get('/cupon/make/{count}', [AmpiController::class, 'makeCoupons']);
+    //Route::get('/cupon/make/{count}', [AmpiController::class, 'makeCoupons']);
 });
 
 Route::domain('dom.' . env('APP_URL'))->group(function () {
