@@ -158,4 +158,16 @@ class AmpiController extends Controller
 
         return Checkout::create($validCheckout);
     }
+
+    public function makeCoupons(int $number) {
+        for ($i = 0; $i < $number; $i++) {
+            Coupon::create([
+                'coupon' => Str::random(10),
+                'available' => 1,
+                'type' => 1
+            ]);
+        }
+    }
+
 }
+
