@@ -111,6 +111,21 @@ class AdminController extends Controller
                     return $row;
                 });
                 break;
+            case 'ampi':
+                $rows = Ampi::where('payment_status', 0)->get();
+                $rows->map(function ($row) {
+
+                    Mail::to($row->email)->send(new RegisterCompleted(
+                        'ampi_' . $row->id,
+                        asset('images/logo_ampi.jpg'),
+                        4,
+                        $row->conekta_url,
+                        $row->name
+                    ));
+
+                    return $row;
+                });
+                break;
         }
         return response()->json(['message' => '¡Correos enviados con exito!'], 200);
     }
@@ -162,7 +177,7 @@ class AdminController extends Controller
                     3,
                     $user->name
                 ));
-                
+
                 return response()->json([], 200);
             }
         }

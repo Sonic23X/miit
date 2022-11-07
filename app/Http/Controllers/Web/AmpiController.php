@@ -106,9 +106,9 @@ class AmpiController extends Controller
         return view('pages.ampi.validate', $data);
     }
 
-    public function dashboard()
+    public function dashboard(): View
     {
-        echo "Permiso para escanear QR's concedido";
+        return view('pages.ampi.dashboard', ['registration' => Ampi::query()->paginate(10)]);
     }
 
     public function validateCoupon(string $coupon): JsonResponse

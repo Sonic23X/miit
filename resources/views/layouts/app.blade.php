@@ -16,12 +16,9 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            {{ $slot }}
+
         </div>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"
