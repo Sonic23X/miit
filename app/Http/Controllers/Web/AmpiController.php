@@ -43,6 +43,8 @@ class AmpiController extends Controller
      */
     public function store(AmpiRequest $request): RedirectResponse
     {
+        $cupon = Coupon::where('coupon', $request->coupon)->first();
+
         $row = Ampi::create([
             'hash' => Str::random(10),
             'name' => $request->name,
@@ -53,13 +55,19 @@ class AmpiController extends Controller
             'real_estate' => $request->real_estate,
             'is_partner' => $request->partner,
             'region' => $request->region,
-            'conekta_url' => ''
+            'conekta_url' => '',
+            'coupon_id' => $cupon != null ? $cupon->id : ''
         ]);
 
-        QrCode::format('png')
+        if ($cupon != null) {
+            $cupon->available = 0;
+            $cupon->save();
+        }
+
+        /*QrCode::format('png')
         ->color(0, 0, 0)
             //->generate(url('canadevi/validacion/ampi_' . $row->hash), '../public/qrcodes/canadevi_'.$row->id.'.png');
-            ->generate(url('canadevi/validacion/ampi_' . $row->hash), public_path('qrcodes/ampi_' . $row->id . '.png'));
+            ->generate(url('canadevi/validacion/ampi_' . $row->hash), public_path('qrcodes/ampi_' . $row->id . '.png'));*/
 
         $conektaInfo = $this->doPaymentLink($row);
 
@@ -68,7 +76,7 @@ class AmpiController extends Controller
 
         Mail::to($row->email)->send(new RegisterCompleted(
             'ampi_' . $row->id,
-            asset('images/logo_ampi.png'),
+            asset('images/logo_ampi.jpg'),
             1,
             $conektaInfo->url,
             $row->name

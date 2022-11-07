@@ -1,6 +1,6 @@
 <x-form-layout>
     <div class="flex flex-col mb-10 items-center">
-        <img class="h-24 mb-6" src="{{ asset('images/logo_ampi.png') }}" alt="logo">
+        <img class="h-24 mb-6" src="{{ asset('images/logo_ampi.jpg') }}" alt="logo">
         <p class="text-center">
             <span>
                 ¡Bienvenido al registro de asistencia para el 10mo foro de convergencia inmobiliaria en Pachuca!

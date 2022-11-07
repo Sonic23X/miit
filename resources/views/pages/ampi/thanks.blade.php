@@ -1,6 +1,6 @@
 <x-form-layout>
     <div class="flex flex-col mb-1 items-center">
-        <img class="h-24 mb-6" src="{{ asset('images/logo_ampi.png') }}" alt="logo">
+        <img class="h-24 mb-6" src="{{ asset('images/logo_ampi.jpg') }}" alt="logo">
     </div>
     <div class="flex flex-col">
         <div class="flex justify-center">

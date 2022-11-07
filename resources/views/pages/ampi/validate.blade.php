@@ -1,6 +1,6 @@
 <x-form-layout>
     <div class="flex flex-col mb-1 items-center">
-        <img class="w-40 h-40" src="{{ asset('images/foto_canadevi.png') }}" alt="logo_expo_inmobiliaria">
+        <img class="w-40 h-40" src="{{ asset('images/foto_canadevi.jpg') }}" alt="logo_expo_inmobiliaria">
     </div>
     <div class="flex flex-col mt-5">
         <span class="text-base">
