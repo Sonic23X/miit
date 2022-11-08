@@ -17,6 +17,9 @@
                         <table class="w-full text-sm text-gray-500 text-center">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
+                                    <th>
+                                        #
+                                    </th>
                                     <th scope="col" class="py-3 px-6">
                                         Cupón
                                     </th>
@@ -28,9 +31,12 @@
                             <tbody>
                                 @foreach ($coupons as $row)
                                 <tr class="bg-white border-b">
-                                    <th scope="row" class="py-4 px-6 font-bold text-gray-900 whitespace-nowrap">
-                                        {{ $row->coupon }}
+                                    <th scope="row">
+                                        {{ $row->id }}
                                     </th>
+                                    <td class="py-4 px-6 font-bold text-gray-900 whitespace-nowrap">
+                                        {{ $row->coupon }}
+                                    </td>
                                     <td class="py-4 px-6">
                                         @if($row->available === 0)
                                         <span class="text-red-600">
@@ -81,7 +87,7 @@
                         })
                         .catch(error => {
                             Swal.showValidationMessage(
-                                `Request failed: ${error}`
+                                `Error al generar los cupones, intenta más tarde`
                             )
                         })
                     },

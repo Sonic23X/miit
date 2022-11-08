@@ -64,7 +64,12 @@ Route::domain('ampi.' . env('APP_URL'))->group(function () {
     Route::post('/formulario', [AmpiController::class, 'store'])->name('form_store_ampi');
     Route::get('/validacion/{hash}', [AmpiController::class, 'confirm']);
     Route::get('/cupon/{cupon}', [AmpiController::class, 'validateCoupon']);
-    //Route::get('/cupon/make/{count}', [AmpiController::class, 'makeCoupons']);
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/dashboard', [AmpiController::class, 'dashboard'])->name('dashboard_ampi');
+        Route::get('/cupon', [AmpiController::class, 'cupon_dash'])->name('dashboard_coupon');
+        Route::get('/cupon/make/{count}', [AmpiController::class, 'makeCoupons']);
+    });
 });
 
 Route::domain('dom.' . env('APP_URL'))->group(function () {
@@ -100,6 +105,8 @@ Route::domain('access.' . env('APP_URL'))->group(function () {
     });
 });
 
+/*
+
 Route::middleware(['auth'])->group(function() {
     //Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', function () {
@@ -115,4 +122,4 @@ Route::middleware(['auth'])->group(function() {
 Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
-Route::post('login', [AuthenticatedSessionController::class, 'store']);
+Route::post('login', [AuthenticatedSessionController::class, 'store']);*/

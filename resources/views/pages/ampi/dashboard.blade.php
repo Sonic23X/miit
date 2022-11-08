@@ -30,7 +30,13 @@
                                         Invitado
                                     </th>
                                     <th scope="col" class="py-3 px-6">
+                                        Invitado especial
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
                                         Pago físico
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Transferencia
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         Pago con tarjeta
@@ -65,6 +71,19 @@
                                     </td>
                                     <td class="py-4 px-6">
                                         <div class="flex justify-center">
+                                            <input id="option_{{ App\Models\Ampi::MODE_ESP_INV . '_' . $row->id }}" type="checkbox" value="1"
+                                                @if ($row->payment_mode === App\Models\Ampi::MODE_ESP_INV) checked @endif
+                                                @if ($row->payment_status === 1)
+                                                disabled
+                                                class="w-4 h-4 text-blue-600 bg-gray-400 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                                @else
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                                @endif
+                                                onclick="validate({{ App\Models\Ampi::MODE_ESP_INV }}, {{ $row->id }})">
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <div class="flex justify-center">
                                             <input id="option_{{ App\Models\Ampi::MODE_FIS . '_' . $row->id }}" type="checkbox" value="1"
                                                 @if ($row->payment_mode === App\Models\Ampi::MODE_FIS) checked @endif
                                                 @if ($row->payment_status === 1)
@@ -74,6 +93,19 @@
                                                 class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
                                                 @endif
                                                 onclick="validate({{ App\Models\Ampi::MODE_FIS }}, {{ $row->id }})">
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <div class="flex justify-center">
+                                            <input id="option_{{ App\Models\Ampi::MODE_TRANS . '_' . $row->id }}" type="checkbox" value="1"
+                                                @if ($row->payment_mode === App\Models\Ampi::MODE_TRANS) checked @endif
+                                                @if ($row->payment_status === 1)
+                                                disabled
+                                                class="w-4 h-4 text-blue-600 bg-gray-400 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                                @else
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                                @endif
+                                                onclick="validate({{ App\Models\Ampi::MODE_TRANS }}, {{ $row->id }})">
                                         </div>
                                     </td>
                                     <td class="py-4 px-6">
@@ -120,6 +152,10 @@
                     selection = {{ App\Models\Ampi::MODE_FIS }}
                 else if (document.getElementById(`option_{{ App\Models\Ampi::MODE_INV }}_${id}`).checked)
                     selection = {{ App\Models\Ampi::MODE_INV }}
+                else if (document.getElementById(`option_{{ App\Models\Ampi::MODE_ESP_INV }}_${id}`).checked)
+                    selection = {{ App\Models\Ampi::MODE_ESP_INV }}
+                else if (document.getElementById(`option_{{ App\Models\Ampi::MODE_TRANS }}_${id}`).checked)
+                    selection = {{ App\Models\Ampi::MODE_TRANS }}
 
                 fetch('{{ url("api/admin/ampi") }}', {
                     headers:{
@@ -146,6 +182,16 @@
                     inv.classList.remove('bg-gray-100')
                     inv.classList.add('bg-gray-400')
 
+                    let inv_esp = document.getElementById(`option_{{ App\Models\Ampi::MODE_ESP_INV }}_${id}`)
+                    inv_esp.disabled = true
+                    inv_esp.classList.remove('bg-gray-100')
+                    inv_esp.classList.add('bg-gray-400')
+
+                    let trans = document.getElementById(`option_{{ App\Models\Ampi::MODE_TRANS }}_${id}`)
+                    trans.disabled = true
+                    trans.classList.remove('bg-gray-100')
+                    trans.classList.add('bg-gray-400')
+
                     document.getElementById(`row_user_${id}`).innerHTML = ''
 
                     Swal.fire({
@@ -154,7 +200,7 @@
                         text: result.message,
                     })
                 })
-                .fail(() => {
+                .catch(() => {
                     Swal.fire({
                         icon: 'error',
                         title: '¡Error!',
@@ -169,18 +215,40 @@
                         if (document.getElementById(`option_${type}_${id}`).checked) {
                             document.getElementById(`option_{{{ App\Models\Ampi::MODE_FIS }}}_${id}`).checked = false
                             document.getElementById(`option_{{{ App\Models\Ampi::MODE_INV }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_ESP_INV }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_TRANS }}}_${id}`).checked = false
                         }
                         break;
                     case {{ App\Models\Ampi::MODE_FIS }}:
                         if (document.getElementById(`option_${type}_${id}`).checked) {
                             document.getElementById(`option_{{{ App\Models\Ampi::MODE_CARD }}}_${id}`).checked = false
                             document.getElementById(`option_{{{ App\Models\Ampi::MODE_INV }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_ESP_INV }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_TRANS }}}_${id}`).checked = false
                         }
                         break;
                     case {{ App\Models\Ampi::MODE_INV }}:
                         if (document.getElementById(`option_${type}_${id}`).checked) {
                             document.getElementById(`option_{{{ App\Models\Ampi::MODE_FIS }}}_${id}`).checked = false
                             document.getElementById(`option_{{{ App\Models\Ampi::MODE_CARD }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_ESP_INV }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_TRANS }}}_${id}`).checked = false
+                        }
+                        break;
+                    case {{ App\Models\Ampi::MODE_TRANS }}:
+                        if (document.getElementById(`option_${type}_${id}`).checked) {
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_CARD }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_INV }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_ESP_INV }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_FIS }}}_${id}`).checked = false
+                        }
+                        break;
+                    case {{ App\Models\Ampi::MODE_ESP_INV }}:
+                        if (document.getElementById(`option_${type}_${id}`).checked) {
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_FIS }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_CARD }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_INV }}}_${id}`).checked = false
+                            document.getElementById(`option_{{{ App\Models\Ampi::MODE_TRANS }}}_${id}`).checked = false
                         }
                         break;
                 }

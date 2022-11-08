@@ -58,6 +58,25 @@ class AdminController extends Controller
         return response()->json(['message' => '¡Proceso completado con exito!'], 200);
     }
 
+    public function setPaymentAmpi(Request $request)
+    {
+        $user = Ampi::findOrFail($request->user);
+
+        $user->payment_mode = $request->mode;
+        $user->payment_status = 1;
+
+        $user->save();
+
+        Mail::to($user->email)->send(new PaymentCompleted(
+            'ampi_' . $user->id,
+            asset('images/logo_ampi.jpg'),
+            3,
+            $user->name
+        ));
+
+        return response()->json(['message' => '¡Proceso completado con exito!'], 200);
+    }
+
     public function sendEmails(string $option)
     {
         switch($option) {
