@@ -65,6 +65,9 @@ Route::domain('ampi.' . env('APP_URL'))->group(function () {
     Route::get('/validacion/{hash}', [AmpiController::class, 'confirm']);
     Route::get('/cupon/{cupon}', [AmpiController::class, 'validateCoupon']);
 
+    Route::get('login', [AmpiController::class, 'login'])->name('login');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [AmpiController::class, 'dashboard'])->name('dashboard_ampi');
         Route::get('/cupon', [AmpiController::class, 'cupon_dash'])->name('dashboard_coupon');
