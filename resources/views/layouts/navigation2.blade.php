@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('dashboard_ampi')" :active="request()->routeIs('dashboard_ampi')">
                         {{ __('Foro') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('dashboard_coupon')" :active="request()->routeIs('dashboard_coupon')">
+                        {{ __('Cupón') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -65,6 +68,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard_ampi')" :active="request()->routeIs('dashboard_ampi')">
                 {{ __('Foro') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dashboard_coupon')" :active="request()->routeIs('dashboard_coupon')">
+                {{ __('Cupón') }}
             </x-responsive-nav-link>
         </div>
 

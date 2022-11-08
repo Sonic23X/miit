@@ -111,6 +111,11 @@ class AmpiController extends Controller
         return view('pages.ampi.dashboard', ['registration' => Ampi::query()->paginate(10)]);
     }
 
+    public function cupon_dash(): View
+    {
+        return view('pages.ampi.dashboard_cupon', ['coupons' => Coupon::query()->paginate(20)]);
+    }
+
     public function validateCoupon(string $coupon): JsonResponse
     {
         $cupon = Coupon::where('coupon', $coupon)->first();
@@ -167,6 +172,8 @@ class AmpiController extends Controller
                 'type' => 1
             ]);
         }
+
+        return response()->json(['message' => 'Cupones generados con exito', 'status' => 200], 200);
     }
 
 }
