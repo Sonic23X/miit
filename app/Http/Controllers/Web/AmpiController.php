@@ -66,8 +66,8 @@ class AmpiController extends Controller
 
         QrCode::format('png')
         ->color(0, 0, 0)
-            //->generate(url('canadevi/validacion/ampi_' . $row->hash), '../public/qrcodes/canadevi_'.$row->id.'.png');
-            ->generate(url('canadevi/validacion/ampi_' . $row->hash), public_path('qrcodes/ampi_' . $row->id . '.png'));
+            //->generate(url('validacion/ampi_' . $row->hash), '../public/qrcodes/canadevi_'.$row->id.'.png');
+            ->generate(url('validacion/ampi_' . $row->hash), public_path('qrcodes/ampi_' . $row->id . '.png'));
 
         $conektaInfo = $this->doPaymentLink($row);
 
