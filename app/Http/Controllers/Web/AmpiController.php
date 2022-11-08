@@ -56,7 +56,7 @@ class AmpiController extends Controller
             'is_partner' => $request->partner,
             'region' => $request->region,
             'conekta_url' => '',
-            'coupon_id' => $cupon != null ? $cupon->id : ''
+            'coupon_id' => $cupon->id ?? null
         ]);
 
         if ($cupon != null) {
@@ -64,10 +64,10 @@ class AmpiController extends Controller
             $cupon->save();
         }
 
-        /*QrCode::format('png')
+        QrCode::format('png')
         ->color(0, 0, 0)
             //->generate(url('canadevi/validacion/ampi_' . $row->hash), '../public/qrcodes/canadevi_'.$row->id.'.png');
-            ->generate(url('canadevi/validacion/ampi_' . $row->hash), public_path('qrcodes/ampi_' . $row->id . '.png'));*/
+            ->generate(url('canadevi/validacion/ampi_' . $row->hash), public_path('qrcodes/ampi_' . $row->id . '.png'));
 
         $conektaInfo = $this->doPaymentLink($row);
 
